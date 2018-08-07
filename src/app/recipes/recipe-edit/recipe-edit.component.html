@@ -1,0 +1,76 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Submit</button>
+
+  <hr>
+
+  <h6>Information</h6>
+  <div class="form-group">
+    <label class="sr-only" for="name">Name</label>
+    <input type="text" class="form-control" placeholder="Name" id="name" formControlName="name">
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="description">Description</label>
+    <textarea class="form-control" placeholder="Description" id="description" formControlName="description"></textarea>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-10">
+      <label class="sr-only" for="imagePath">Image Path</label>
+      <input type="url" class="form-control" placeholder="Image Path" id="imagePath" formControlName="imagePath" (input)="onImageInput()" >
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#imagePreview" aria-expanded="false" aria-controls="imagePreview" [disabled]="!isImagePreviewable()" #imagePreviewButton>
+        <i class="fa fa-eye"></i>
+      </button>
+    </div>
+  </div>
+  <div class="collapse row justify-content-center" id="imagePreview">
+    <div class="card text-center" style="width: 18rem;">
+      <div class="card-header">Image Preview</div>
+      <img class="card-img-top" [src]="form.value.imagePath">
+    </div>
+  </div>
+
+  <hr>
+
+  <div formArrayName="ingredients">
+    <h6>Ingredients</h6>
+    <div class="row" *ngFor="let ingredient of form.get('ingredients').controls; let i = index" [formGroupName]="i">
+      <div class="form-group col-md-5">
+        <label class="sr-only" [for]="'ingredientName' + i">Ingredient {{ i + 1 }}</label>
+        <input type="text" class="form-control" placeholder="Ingredient" [id]="'ingredientName' + i" formControlName="name">
+      </div>
+      <div class="form-group col-md-5">
+        <label class="sr-only" [for]="'ingredientAmount' + i">Amount {{ i + 1 }}</label>
+        <input type="number" class="form-control" placeholder="Amount" [id]="'ingredientAmount' + i" formControlName="amount">
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-danger" (click)="onRemoveIngredient(i)">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <button type="button" class="btn btn-success" (click)="onAddIngredient()">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+
+  <hr>
+
+  <div formArrayName="steps">
+    <h6>Steps</h6>
+    <div class="row" *ngFor="let step of form.get('steps').controls; let i = index">
+      <div class="form-group col-md-10">
+        <label class="sr-only" [for]="'step' + i">Step {{ i + 1 }}</label>
+        <textarea class="form-control" placeholder="Step" [formControlName]="i"></textarea>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-danger" (click)="onRemoveStep(i)">
+          <i class="fa fa-minus"></i>
+        </button>
+      </div>
+    </div>
+    <button type="button" class="btn btn-success" (click)="onAddStep()">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+</form>

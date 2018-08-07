@@ -1,0 +1,20 @@
+<div class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">Recipes</h1>
+    <p>
+      <a class="btn btn-primary my-2" [routerLink]="['new']">New Recipe</a>
+    </p>
+  </div>
+</div>
+
+<div class="container-fluid py-5">
+  <div class="row">
+    <div class="col-md-8">
+      <app-recipe-list></app-recipe-list>
+    </div>
+    <div class="col-md-4 order-first order-md-last">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+

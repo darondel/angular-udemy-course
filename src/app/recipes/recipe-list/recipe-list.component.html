@@ -1,0 +1,7 @@
+<div class="container-fluid py-5">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let recipe of recipes | async">
+      <app-recipe-item [id]="recipe[0]" [recipe]="recipe[1]"></app-recipe-item>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+.btn-google {
+  color: #fff;
+  background-color: #ea4335;
+  border-color: #ea4335;
+}
+
+.btn-google:hover, .btn-google:focus, .btn-google:active, .btn-google.active, .open>.dropdown-toggle.btn-google {
+  color: #fff;
+  background-color: #9b2923;
+  border-color: #823226;
+}
+
+.btn-facebook {
+  color: #fff;
+  background-color: #3b5998;
+  border-color: #3b5998;
+}
+
+.btn-facebook:hover, .btn-facebook:focus, .btn-facebook:active, .btn-facebook.active, .open>.dropdown-toggle.btn-facebook {
+  color: #fff;
+  background-color: #254369;
+  border-color: #212450;
+}
