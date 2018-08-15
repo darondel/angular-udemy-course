@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../auth/shared/auth.service';
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from '../shopping-list/shopping-list.service';
+import { ShoppingService } from '../shopping/shared/shopping.service';
 
 @Component({
   selector: 'app-nav',
@@ -17,11 +17,11 @@ export class NavComponent implements OnInit, OnDestroy {
   ingredientsSubscription: Subscription;
   ingredients: Ingredient[];
 
-  constructor(private router: Router, private authService: AuthService, private shoppingListService: ShoppingListService) {
+  constructor(private router: Router, private authService: AuthService, private shoppingService: ShoppingService) {
   }
 
   ngOnInit() {
-    this.ingredientsSubscription = this.shoppingListService.getIngredients().subscribe(ingredients => this.ingredients = ingredients);
+    this.ingredientsSubscription = this.shoppingService.getIngredients().subscribe(ingredients => this.ingredients = ingredients);
   }
 
   ngOnDestroy() {
