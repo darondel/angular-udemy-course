@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { AuthService } from '../auth/auth.service';
+import { AuthService } from '../auth/shared/auth.service';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 

@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Recipe } from './recipe.model';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../auth/shared/auth.service';
 
 const BACKEND_URL = 'https://udemy-super-mega-recipe-book.firebaseio.com';
 const RECIPE_STORE = 'recipes';

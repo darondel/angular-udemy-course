@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-
 import User = firebase.User;
 import UserCredential = firebase.auth.UserCredential;
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
