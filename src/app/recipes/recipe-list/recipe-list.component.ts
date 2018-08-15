@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
+import { Recipe } from '../shared/recipe.model';
+import { RecipeService } from '../shared/recipe.service';
 
 @Component({
   selector: 'app-recipe-list',

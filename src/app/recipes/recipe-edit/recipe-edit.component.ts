@@ -2,8 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
+import { Recipe } from '../shared/recipe.model';
+import { RecipeService } from '../shared/recipe.service';
 import { Ingredient } from '../../shared/ingredient.model';
 import { ImageValidator } from '../../shared/image-validator.directive';
 
