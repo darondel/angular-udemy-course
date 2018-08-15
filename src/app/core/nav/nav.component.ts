@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { AuthService } from '../auth/shared/auth.service';
-import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingService } from '../shopping/shared/shopping.service';
+import { AuthService } from '../../auth/shared/auth.service';
+import { Ingredient } from '../../shared/ingredient.model';
+import { ShoppingService } from '../../shopping/shared/shopping.service';
 
 @Component({
   selector: 'app-nav',
