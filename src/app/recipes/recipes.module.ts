@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
 
+import { RecipesRoutingModule } from "./recipes-routing.module";
+import { SharedModule } from "../shared/shared.module";
+
 import { RecipesComponent } from "./recipes.component";
 import { RecipeListComponent } from "./recipe-list/recipe-list.component";
 import { RecipeItemComponent } from "./recipe-item/recipe-item.component";
@@ -14,7 +17,9 @@ import { RecipeEditComponent } from "./recipe-edit/recipe-edit.component";
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    RecipesRoutingModule,
+    SharedModule
   ],
   declarations: [
     RecipesComponent,
