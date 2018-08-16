@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const appRoutes: Routes = [
+const routes: Routes = [
   {path: '', redirectTo: '/recipes', pathMatch: 'full'},
   {path: '**', redirectTo: '404'}
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(routes)
   ],
   exports: [
     RouterModule
