@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { CoreModule } from "./core/core.module";
 import { AuthModule } from "./auth/auth.module";
 import { RecipesModule } from "./recipes/recipes.module";
-import { ShoppingModule } from "./shopping/shopping.module";
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -18,7 +17,6 @@ import { AppComponent } from './app.component';
     CoreModule,
     AuthModule,
     RecipesModule,
-    ShoppingModule,
     AppRoutingModule
   ],
   providers: [],
