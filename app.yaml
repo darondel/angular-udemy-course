@@ -1,0 +1,13 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+
+- url: /(.*\.(gif|png|jpg|css|js|eot|svg|woff|woff2|ttf)(|\.map))$
+  static_files: dist/udemy-super-mega-recipe-book/\1
+  upload: dist/udemy-super-mega-recipe-book/(.*)(|\.map)
+
+- url: /(.*)
+  static_files: dist/udemy-super-mega-recipe-book/index.html
+  upload: dist/udemy-super-mega-recipe-book/index.html
