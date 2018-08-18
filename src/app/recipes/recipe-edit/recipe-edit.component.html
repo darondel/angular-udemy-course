@@ -34,7 +34,7 @@
 
   <div formArrayName="ingredients">
     <h6>Ingredients</h6>
-    <div class="row" *ngFor="let ingredient of getIngredients().controls; let i = index" [formGroupName]="i">
+    <div class="row" *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
       <div class="form-group col-md-5">
         <label class="sr-only" [for]="'ingredientName' + i">Ingredient {{ i + 1 }}</label>
         <input type="text" class="form-control" placeholder="Ingredient" [id]="'ingredientName' + i" formControlName="name">
@@ -58,7 +58,7 @@
 
   <div formArrayName="steps">
     <h6>Steps</h6>
-    <div class="row" *ngFor="let step of getSteps().controls; let i = index">
+    <div class="row" *ngFor="let step of steps.controls; let i = index">
       <div class="form-group col-md-10">
         <label class="sr-only" [for]="'step' + i">Step {{ i + 1 }}</label>
         <textarea class="form-control" placeholder="Step" [formControlName]="i"></textarea>

@@ -17,6 +17,8 @@ export class RecipeEditComponent implements OnInit {
   @ViewChild('imagePreviewButton') imagePreviewButton: ElementRef;
 
   form: FormGroup;
+  ingredients: FormArray;
+  steps: FormArray;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,12 +31,15 @@ export class RecipeEditComponent implements OnInit {
     this.route.data.subscribe(data => {
       const recipe = <Recipe> data['recipe'];
 
+      this.ingredients = this.formBuilder.array([]);
+      this.steps = this.formBuilder.array([]);
+
       this.form = this.formBuilder.group({
         name: [recipe ? recipe.name : '', Validators.required],
         description: recipe ? recipe.description : '',
         imagePath: [recipe ? recipe.imagePath : '', [], ImageValidator.loadable],
-        ingredients: this.formBuilder.array([]),
-        steps: this.formBuilder.array([])
+        ingredients: this.ingredients,
+        steps: this.steps
       });
 
       if (recipe) {
@@ -84,7 +89,7 @@ export class RecipeEditComponent implements OnInit {
    * @param ingredient the ingredient to fill in
    */
   onAddIngredient(ingredient?: Ingredient) {
-    this.getIngredients().push(this.formBuilder.group({
+    this.ingredients.push(this.formBuilder.group({
       name: [ingredient ? ingredient.name : '', Validators.required],
       amount: [ingredient ? ingredient.amount : '', [Validators.required, Validators.min(1)]]
     }));
@@ -96,7 +101,7 @@ export class RecipeEditComponent implements OnInit {
    * @param index the index of the ingredient in the form
    */
   onRemoveIngredient(index: number) {
-    this.getIngredients().removeAt(index);
+    this.ingredients.removeAt(index);
   }
 
   /**
@@ -105,7 +110,7 @@ export class RecipeEditComponent implements OnInit {
    * @param step the step to fill in
    */
   onAddStep(step?: string) {
-    this.getSteps().push(this.formBuilder.control(step, Validators.required));
+    this.steps.push(this.formBuilder.control(step, Validators.required));
   }
 
   /**
@@ -114,25 +119,7 @@ export class RecipeEditComponent implements OnInit {
    * @param index the index of the step in the form
    */
   onRemoveStep(index: number) {
-    this.getSteps().removeAt(index);
-  }
-
-  /**
-   * Get the ingredients.
-   *
-   * @return the ingredients as an array
-   */
-  getIngredients(): FormArray {
-    return <FormArray> this.form.get('ingredients');
-  }
-
-  /**
-   * Get the steps.
-   *
-   * @return the steps as an array
-   */
-  getSteps(): FormArray {
-    return <FormArray> this.form.get('steps');
+    this.steps.removeAt(index);
   }
 
   /**
