@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { ShoppingListService } from '../shopping-list.service';
+import { ShoppingService } from '../shared/shopping.service';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -12,7 +12,7 @@ export class ShoppingEditComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private shoppingListService: ShoppingListService) {
+  constructor(private formBuilder: FormBuilder, private shoppingService: ShoppingService) {
   }
 
   ngOnInit() {
@@ -27,7 +27,7 @@ export class ShoppingEditComponent implements OnInit {
   }
 
   onAdd() {
-    this.shoppingListService.addIngredients({
+    this.shoppingService.addIngredients({
       name: this.form.value.ingredientName,
       amount: this.form.value.ingredientAmount
     });

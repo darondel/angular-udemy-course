@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Recipe } from '../recipe.model';
-import { ShoppingListService } from '../../shopping-list/shopping-list.service';
+import { Recipe } from '../shared/recipe.model';
+import { ShoppingService } from '../../shopping/shared/shopping.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -13,7 +13,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   recipe: Recipe;
 
-  constructor(private route: ActivatedRoute, private shoppingListService: ShoppingListService) {
+  constructor(private route: ActivatedRoute, private shoppingService: ShoppingService) {
   }
 
   ngOnInit() {
@@ -21,7 +21,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   onToShoppingList() {
-    this.shoppingListService.addIngredients(...this.recipe.ingredients);
+    this.shoppingService.addIngredients(...this.recipe.ingredients);
   }
 
 }

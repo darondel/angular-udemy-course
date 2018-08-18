@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 
-import { Ingredient } from '../shared/ingredient.model';
+import { Ingredient } from '../../shared/ingredient.model';
 
 const INGREDIENTS: Ingredient[] = [
   {name: 'Apple', amount: 5},
@@ -12,7 +12,7 @@ const INGREDIENTS: Ingredient[] = [
 @Injectable({
   providedIn: 'root'
 })
-export class ShoppingListService {
+export class ShoppingService {
 
   constructor() {
   }
