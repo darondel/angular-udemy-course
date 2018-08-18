@@ -17,7 +17,7 @@ export class NavComponent implements OnInit, OnDestroy {
   ingredientsSubscription: Subscription;
   ingredients: Ingredient[];
 
-  constructor(private router: Router, private authService: AuthService, private shoppingService: ShoppingService) {
+  constructor(private router: Router, protected authService: AuthService, private shoppingService: ShoppingService) {
   }
 
   ngOnInit() {
@@ -26,10 +26,6 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.ingredientsSubscription.unsubscribe();
-  }
-
-  isUserLoggedIn(): boolean {
-    return this.authService.isAuthenticated();
   }
 
   onLogout() {

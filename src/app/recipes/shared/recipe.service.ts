@@ -49,7 +49,7 @@ export class RecipeService {
   }
 
   private getURL(store: string, id?: string): string {
-    const token = this.authService.getIdToken();
+    const token = this.authService.token;
 
     return BACKEND_URL + '/' + store + (id ? '/' + id : '') + '.json' + (token ? '?auth=' + token : '');
   }

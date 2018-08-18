@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 
+import { Observable, ReplaySubject } from "rxjs";
+import { map } from "rxjs/operators";
+
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
 import User = firebase.User;
@@ -12,27 +15,26 @@ import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 })
 export class AuthService {
 
-  user: User;
+  private user = new ReplaySubject<User>(1);
+
   token: string;
 
   constructor() {
     firebase.auth().onIdTokenChanged(user => {
-      this.user = user;
+      this.user.next(user);
 
-      if (this.user) {
-        this.user.getIdToken().then(token => this.token = token);
+      if (user) {
+        user.getIdToken().then(token => this.token = token);
       } else {
         this.token = null;
       }
     });
   }
 
-  isAuthenticated(): boolean {
-    return this.user != null;
-  }
-
-  getIdToken(): string {
-    return this.token;
+  get isAuthenticated(): Observable<boolean> {
+    return this.user.pipe(
+      map(user => user !== null)
+    );
   }
 
   signup(email: string, password: string): Promise<UserCredential> {
