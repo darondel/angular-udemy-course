@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { HttpClient } from "@angular/common/http";
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,47 +15,37 @@ const RECIPE_STORE = 'recipes';
 })
 export class RecipeService {
 
-  constructor(private http: Http, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService) {
   }
 
   getRecipes(): Observable<[string, Recipe][]> {
     return this.http.get(this.getURL(RECIPE_STORE)).pipe(
-      map(response => Object.entries(this.toRecipe(response)))
+      map(response => Object.entries(response))
     );
   }
 
   getRecipe(id: string): Observable<Recipe> {
-    return this.http.get(this.getURL(RECIPE_STORE, id)).pipe(
-      map(response => this.toRecipe(response))
-    );
+    return this.http.get<Recipe>(this.getURL(RECIPE_STORE, id));
   }
 
   addRecipe(recipe: Recipe): Observable<string> {
-    return this.http.post(this.getURL(RECIPE_STORE), recipe).pipe(
-      map(response => this.toRecipe(response).name)
+    return this.http.post<Recipe>(this.getURL(RECIPE_STORE), recipe).pipe(
+      map(response => response.name)
     );
   }
 
   deleteRecipe(id: string): Observable<Recipe> {
-    return this.http.delete(this.getURL(RECIPE_STORE, id)).pipe(
-      map(response => this.toRecipe(response))
-    );
+    return this.http.delete<Recipe>(this.getURL(RECIPE_STORE, id));
   }
 
   updateRecipe(id: string, recipe: Recipe): Observable<Recipe> {
-    return this.http.put(this.getURL(RECIPE_STORE, id), recipe).pipe(
-      map(response => this.toRecipe(response))
-    );
+    return this.http.put<Recipe>(this.getURL(RECIPE_STORE, id), recipe);
   }
 
   private getURL(store: string, id?: string): string {
     const token = this.authService.token;
 
     return BACKEND_URL + '/' + store + (id ? '/' + id : '') + '.json' + (token ? '?auth=' + token : '');
-  }
-
-  private toRecipe(response: Response): Recipe {
-    return response.json();
   }
 
 }
