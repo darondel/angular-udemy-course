@@ -1,13 +1,11 @@
 import { Ingredient } from '../../shared/ingredient.model';
 
-export class Recipe {
+export interface Recipe {
 
-  constructor(
-    public name: string,
-    public description: string,
-    public imagePath: string,
-    public ingredients: Ingredient[],
-    public steps: string[]) {
-  }
+  name: string;
+  description: string;
+  imagePath: string;
+  ingredients: Ingredient[];
+  steps: string[];
 
 }
