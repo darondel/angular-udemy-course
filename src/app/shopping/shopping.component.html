@@ -9,7 +9,7 @@
     <div class="col-md-12">
       <h5>Shopping Cart</h5>
       <ul class="list-group">
-        <li class="list-group-item d-flex align-items-center" *ngFor="let ingredient of ingredients">
+        <li class="list-group-item d-flex align-items-center" *ngFor="let ingredient of ingredients | async">
           <div class="mr-auto">{{ ingredient.name }}</div>
           <span class="badge badge-primary badge-pill mr-2">{{ ingredient.amount }}</span>
           <button type="button" class="btn btn-sm btn-outline-success mr-2" (click)="onIncrementAmount(ingredient)">
