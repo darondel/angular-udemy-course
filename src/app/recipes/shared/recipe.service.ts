@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Recipe } from './recipe.model';
-import { AuthService } from '../../auth/shared/auth.service';
 
 const BACKEND_URL = 'https://udemy-super-mega-recipe-book.firebaseio.com';
 const RECIPE_STORE = 'recipes';
@@ -15,7 +14,7 @@ const RECIPE_STORE = 'recipes';
 })
 export class RecipeService {
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient) {
   }
 
   getRecipes(): Observable<[string, Recipe][]> {
@@ -43,9 +42,7 @@ export class RecipeService {
   }
 
   private getURL(store: string, id?: string): string {
-    const token = this.authService.token;
-
-    return BACKEND_URL + '/' + store + (id ? '/' + id : '') + '.json' + (token ? '?auth=' + token : '');
+    return BACKEND_URL + '/' + store + (id ? '/' + id : '') + '.json';
   }
 
 }
