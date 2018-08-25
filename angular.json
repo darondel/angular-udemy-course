@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "udemy-super-mega-recipe-book"
+  "defaultProject": "udemy-super-mega-recipe-book",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
