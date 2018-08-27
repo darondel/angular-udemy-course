@@ -22,11 +22,17 @@ export class ShoppingComponent implements OnInit {
   }
 
   onIncrementAmount(ingredient: Ingredient) {
-    ingredient.amount++;
+    this.shoppingService.addIngredients({
+      name: ingredient.name,
+      amount: 1
+    });
   }
 
   onDecrementAmount(ingredient: Ingredient) {
-    ingredient.amount--;
+    this.shoppingService.addIngredients({
+      name: ingredient.name,
+      amount: -1
+    });
   }
 
   onRemoveIngredient(ingredient: Ingredient) {
