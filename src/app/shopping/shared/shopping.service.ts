@@ -1,48 +1,38 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, of } from 'rxjs';
+import { select, Store } from "@ngrx/store";
 
+import { Observable } from 'rxjs';
+
+import { AddIngredient, RemoveIngredient } from "../store/actions/ingredient.actions";
 import { Ingredient } from '../../shared/ingredient.model';
-
-const INGREDIENTS: Ingredient[] = [
-  {name: 'Apple', amount: 5},
-  {name: 'Tomato', amount: 10}
-];
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingService {
 
-  constructor() {
+  constructor(private store: Store<{ shopping: { ingredients: Ingredient[] } }>) {
   }
 
   getIngredients(): Observable<Ingredient[]> {
-    return of(INGREDIENTS);
+    return this.store.pipe(
+      select(state => state.shopping.ingredients)
+    );
   }
 
-  addIngredients(...addedIngredients: Ingredient[]) {
-    if (addedIngredients.length) {
-      addedIngredients.forEach(addedIngredient => {
-        const currentIngredient = INGREDIENTS.find(ingredient => ingredient.name === addedIngredient.name);
-
-        if (currentIngredient) {
-          currentIngredient.amount += addedIngredient.amount;
-        } else {
-          INGREDIENTS.push(addedIngredient);
-        }
+  addIngredients(...ingredients: Ingredient[]) {
+    if (ingredients.length) {
+      ingredients.forEach(ingredient => {
+        this.store.dispatch(new AddIngredient(ingredient));
       });
     }
   }
 
-  removeIngredients(...removedIngredients: Ingredient[]) {
-    if (removedIngredients.length) {
-      removedIngredients.forEach(removedIngredient => {
-        const index = INGREDIENTS.indexOf(removedIngredient, 0);
-
-        if (index > -1) {
-          INGREDIENTS.splice(index, 1);
-        }
+  removeIngredients(...ingredients: Ingredient[]) {
+    if (ingredients.length) {
+      ingredients.forEach(ingredient => {
+        this.store.dispatch(new RemoveIngredient(ingredient))
       });
     }
   }
