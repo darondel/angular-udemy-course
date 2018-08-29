@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { Ingredient } from "../../../shared/ingredient.model";
+import { Ingredient } from "../models/ingredient.model";
 
 export enum IngredientActionType {
   CREATE = '[Ingredient] Create',

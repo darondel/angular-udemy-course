@@ -4,7 +4,7 @@ import { select, Store } from "@ngrx/store";
 
 import { Observable } from 'rxjs';
 
-import { Ingredient } from '../shared/ingredient.model';
+import { Ingredient } from './store/models/ingredient.model';
 import { Delete, Update } from "./store/actions/ingredient.actions";
 import { IngredientState, selectAll } from "./store/reducers/ingredient.reducer";
 

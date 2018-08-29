@@ -2,7 +2,7 @@ import { createFeatureSelector } from "@ngrx/store";
 import { createEntityAdapter, EntityState } from "@ngrx/entity";
 
 import { IngredientAction, IngredientActionType } from "../actions/ingredient.actions";
-import { Ingredient } from "../../../shared/ingredient.model";
+import { Ingredient } from "../models/ingredient.model";
 
 export const ingredientAdapter = createEntityAdapter<Ingredient>();
 

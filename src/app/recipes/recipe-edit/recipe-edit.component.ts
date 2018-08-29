@@ -4,7 +4,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Recipe } from '../shared/recipe.model';
 import { RecipeService } from '../shared/recipe.service';
-import { Ingredient } from '../../shared/ingredient.model';
+import { Ingredient } from '../../shopping/store/models/ingredient.model';
 import { ImageValidator } from '../../shared/image-validator.directive';
 
 @Component({
