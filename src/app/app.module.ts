@@ -10,8 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { AuthInterceptor } from "./auth/shared/auth.interceptor";
-
-import { shoppingReducer } from "./shopping/store/reducers/ingredient.reducer";
+import { ingredientReducer } from "./shopping/store/reducers/ingredient.reducer";
 
 @NgModule({
   declarations: [
@@ -20,7 +19,7 @@ import { shoppingReducer } from "./shopping/store/reducers/ingredient.reducer";
   imports: [
     BrowserModule,
     HttpClientModule,
-    StoreModule.forRoot({shopping: shoppingReducer}),
+    StoreModule.forRoot({ingredient: ingredientReducer}),
     CoreModule,
     RecipesModule,
     AppRoutingModule
