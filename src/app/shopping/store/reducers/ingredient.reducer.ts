@@ -4,16 +4,18 @@ import { createEntityAdapter, EntityState } from "@ngrx/entity";
 import { IngredientAction, IngredientActionType } from "../actions/ingredient.actions";
 import { Ingredient } from "../models/ingredient.model";
 
-export const ingredientAdapter = createEntityAdapter<Ingredient>();
+export const ingredientAdapter = createEntityAdapter<Ingredient>({
+  selectId: ingredient => ingredient.name.toLowerCase()
+});
 
 export interface IngredientState extends EntityState<Ingredient> {
 }
 
 export const initialState: IngredientState = ingredientAdapter.getInitialState({
-  ids: ['0', '1'],
+  ids: ['apple', 'tomato'],
   entities: {
-    '0': {name: 'Apple', amount: 5},
-    '1': {name: 'Tomato', amount: 10}
+    'apple': {name: 'Apple', amount: 5},
+    'tomato': {name: 'Tomato', amount: 10}
   }
 });
 
