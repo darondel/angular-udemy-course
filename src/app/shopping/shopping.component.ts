@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+import { select, Store } from "@ngrx/store";
+
 import { Observable } from 'rxjs';
 
-import { ShoppingService } from './shared/shopping.service';
 import { Ingredient } from '../shared/ingredient.model';
+import { Delete, Update } from "./store/actions/ingredient.actions";
+import { IngredientState, selectAll } from "./store/reducers/ingredient.reducer";
 
 @Component({
   selector: 'app-shopping',
@@ -14,29 +17,25 @@ export class ShoppingComponent implements OnInit {
 
   ingredients: Observable<Ingredient[]>;
 
-  constructor(private shoppingService: ShoppingService) {
+  constructor(private store: Store<IngredientState>) {
   }
 
   ngOnInit() {
-    this.ingredients = this.shoppingService.getIngredients();
+    this.ingredients = this.store.pipe(
+      select(selectAll)
+    );
   }
 
   onIncrementAmount(ingredient: Ingredient) {
-    this.shoppingService.addIngredients({
-      name: ingredient.name,
-      amount: 1
-    });
+    this.store.dispatch(new Update('TODO', {amount: ingredient.amount + 1}));
   }
 
   onDecrementAmount(ingredient: Ingredient) {
-    this.shoppingService.addIngredients({
-      name: ingredient.name,
-      amount: -1
-    });
+    this.store.dispatch(new Update('TODO', {amount: ingredient.amount - 1}));
   }
 
   onRemoveIngredient(ingredient: Ingredient) {
-    this.shoppingService.removeIngredients(ingredient);
+    this.store.dispatch(new Delete('TODO'));
   }
 
 }
