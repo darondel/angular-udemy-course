@@ -3,13 +3,13 @@ import { Action } from '@ngrx/store';
 import { Ingredient } from "../models/ingredient.model";
 
 export enum IngredientActionType {
-  CREATE = '[Ingredient] Create',
+  UPSERT = '[Ingredient] Upsert',
   UPDATE = '[Ingredient] Update',
   DELETE = '[Ingredient] Delete'
 }
 
-export class Create implements Action {
-  readonly type = IngredientActionType.CREATE;
+export class Upsert implements Action {
+  readonly type = IngredientActionType.UPSERT;
 
   constructor(public ingredient: Ingredient) {
   }
@@ -29,4 +29,4 @@ export class Delete implements Action {
   }
 }
 
-export type IngredientAction = Create | Update | Delete;
+export type IngredientAction = Upsert | Update | Delete;

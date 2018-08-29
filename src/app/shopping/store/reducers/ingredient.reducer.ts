@@ -21,8 +21,19 @@ export const initialState: IngredientState = ingredientAdapter.getInitialState({
 
 export function ingredientReducer(state = initialState, action: IngredientAction): IngredientState {
   switch (action.type) {
-    case IngredientActionType.CREATE:
-      return ingredientAdapter.addOne(action.ingredient, state);
+    case IngredientActionType.UPSERT:
+      const id = ingredientAdapter.selectId.call(null, action.ingredient);
+
+      if (id in state.entities) {
+        return ingredientAdapter.updateOne({
+          id: id,
+          changes: {
+            amount: state.entities[id].amount + action.ingredient.amount
+          }
+        }, state);
+      } else {
+        return ingredientAdapter.addOne(action.ingredient, state);
+      }
     case IngredientActionType.UPDATE:
       return ingredientAdapter.updateOne({
         id: action.id,
