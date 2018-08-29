@@ -9,16 +9,17 @@
     <div class="col-md-12">
       <h5>Shopping Cart</h5>
       <ul class="list-group">
-        <li class="list-group-item d-flex align-items-center" *ngFor="let ingredient of ingredients | async">
-          <div class="mr-auto">{{ ingredient.name }}</div>
-          <span class="badge badge-primary badge-pill mr-2">{{ ingredient.amount }}</span>
-          <button type="button" class="btn btn-sm btn-outline-success mr-2" (click)="onIncrementAmount(ingredient)">
+        <li class="list-group-item d-flex align-items-center" *ngFor="let ingredient of ingredients | async | keyvalue">
+          <div class="mr-auto">{{ ingredient.value.name }}</div>
+          <span class="badge badge-primary badge-pill mr-2">{{ ingredient.value.amount }}</span>
+          <button type="button" class="btn btn-sm btn-outline-success mr-2"
+                  (click)="onIncrementAmount(ingredient.key, ingredient.value)">
             <i class="fa fa-plus"></i>
           </button>
-          <button type="button" class="btn btn-sm btn-outline-warning mr-2" (click)="onDecrementAmount(ingredient)" [disabled]="ingredient.amount < 2">
+          <button type="button" class="btn btn-sm btn-outline-warning mr-2" (click)="onDecrementAmount(ingredient.key, ingredient.value)" [disabled]="ingredient.amount < 2">
             <i class="fa fa-minus"></i>
           </button>
-          <button type="button" class="btn btn-sm btn-outline-danger" (click)="onRemoveIngredient(ingredient)">
+          <button type="button" class="btn btn-sm btn-outline-danger" (click)="onRemoveIngredient(ingredient.key)">
             <i class="fa fa-remove"></i>
           </button>
         </li>

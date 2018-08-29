@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
 import { select, Store } from "@ngrx/store";
+import { Dictionary } from "@ngrx/entity";
 
 import { Observable } from 'rxjs';
 
 import { Ingredient } from './store/models/ingredient.model';
 import { Delete, Update } from "./store/actions/ingredient.actions";
-import { IngredientState, selectAll } from "./store/reducers/ingredient.reducer";
+import { IngredientState, selectEntities } from "./store/reducers/ingredient.reducer";
 
 @Component({
   selector: 'app-shopping',
@@ -15,27 +16,27 @@ import { IngredientState, selectAll } from "./store/reducers/ingredient.reducer"
 })
 export class ShoppingComponent implements OnInit {
 
-  ingredients: Observable<Ingredient[]>;
+  ingredients: Observable<Dictionary<Ingredient>>;
 
   constructor(private store: Store<IngredientState>) {
   }
 
   ngOnInit() {
     this.ingredients = this.store.pipe(
-      select(selectAll)
+      select(selectEntities)
     );
   }
 
-  onIncrementAmount(ingredient: Ingredient) {
-    this.store.dispatch(new Update('TODO', {amount: ingredient.amount + 1}));
+  onIncrementAmount(id: string, ingredient: Ingredient) {
+    this.store.dispatch(new Update(id, {amount: ingredient.amount + 1}));
   }
 
-  onDecrementAmount(ingredient: Ingredient) {
-    this.store.dispatch(new Update('TODO', {amount: ingredient.amount - 1}));
+  onDecrementAmount(id: string, ingredient: Ingredient) {
+    this.store.dispatch(new Update(id, {amount: ingredient.amount - 1}));
   }
 
-  onRemoveIngredient(ingredient: Ingredient) {
-    this.store.dispatch(new Delete('TODO'));
+  onRemoveIngredient(id: string) {
+    this.store.dispatch(new Delete(id));
   }
 
 }
