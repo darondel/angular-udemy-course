@@ -1,31 +1,29 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { select, Store } from "@ngrx/store";
+
+import { Observable } from "rxjs";
 
 import { AuthService } from '../../auth/shared/auth.service';
-import { Ingredient } from '../../shared/ingredient.model';
-import { ShoppingService } from '../../shopping/shared/shopping.service';
+import { IngredientState, selectTotal } from "../../shopping/store/reducers/ingredient.reducer";
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit, OnDestroy {
+export class NavComponent implements OnInit {
 
-  ingredientsSubscription: Subscription;
-  ingredients: Ingredient[];
+  ingredientsNumber: Observable<number>;
 
-  constructor(private router: Router, protected authService: AuthService, private shoppingService: ShoppingService) {
+  constructor(private router: Router, protected authService: AuthService, private store: Store<IngredientState>) {
   }
 
   ngOnInit() {
-    this.ingredientsSubscription = this.shoppingService.getIngredients().subscribe(ingredients => this.ingredients = ingredients);
-  }
-
-  ngOnDestroy() {
-    this.ingredientsSubscription.unsubscribe();
+    this.ingredientsNumber = this.store.pipe(
+      select(selectTotal)
+    );
   }
 
   onLogout() {

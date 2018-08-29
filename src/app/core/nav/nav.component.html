@@ -13,7 +13,8 @@
       </li>
       <li class="nav-item" routerLinkActive="active" #shopping="routerLinkActive">
         <a id="shoppingListItem" class="nav-link" routerLink="/shopping">
-          Shopping List <span class="badge badge-info badge-pill">{{ ingredients.length }}</span> <span *ngIf="shopping.isActive" class="sr-only">(current)</span>
+          Shopping List <span class="badge badge-info badge-pill">{{ ingredientsNumber | async }}</span> <span
+          *ngIf="shopping.isActive" class="sr-only">(current)</span>
         </a>
       </li>
     </ul>
