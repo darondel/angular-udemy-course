@@ -1,45 +1,38 @@
-import { ShoppingAction, ShoppingActionType } from "../actions/ingredient.actions";
+import { createFeatureSelector } from "@ngrx/store";
+import { createEntityAdapter, EntityState } from "@ngrx/entity";
+
+import { IngredientAction, IngredientActionType } from "../actions/ingredient.actions";
 import { Ingredient } from "../../../shared/ingredient.model";
 
-export interface ShoppingState {
-  ingredients: Ingredient[];
+export const ingredientAdapter = createEntityAdapter<Ingredient>();
+
+export interface IngredientState extends EntityState<Ingredient> {
 }
 
-export const initialState: ShoppingState = {
-  ingredients: [
-    {name: 'Apple', amount: 5},
-    {name: 'Tomato', amount: 10}
-  ]
-};
+export const initialState: IngredientState = ingredientAdapter.getInitialState({
+  ids: ['0', '1'],
+  entities: {
+    '0': {name: 'Apple', amount: 5},
+    '1': {name: 'Tomato', amount: 10}
+  }
+});
 
-export function shoppingReducer(state = initialState, action: ShoppingAction): ShoppingState {
+export function ingredientReducer(state = initialState, action: IngredientAction): IngredientState {
   switch (action.type) {
-    case ShoppingActionType.ADD_INGREDIENT:
-      let ingredients;
-      const index = state.ingredients.findIndex(ingredient => ingredient.name === action.payload.name);
-
-      if (index > -1) {
-        const ingredient = state.ingredients[index];
-
-        ingredients = [...state.ingredients];
-        ingredients[index] = {
-          ...ingredient,
-          amount: ingredient.amount + action.payload.amount
-        };
-      } else {
-        ingredients = [...state.ingredients, action.payload];
-      }
-
-      return {
-        ...state,
-        ingredients: ingredients
-      };
-    case ShoppingActionType.REMOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: state.ingredients.filter(ingredient => ingredient.name !== action.payload.name)
-      };
+    case IngredientActionType.CREATE:
+      return ingredientAdapter.addOne(action.ingredient, state);
+    case IngredientActionType.UPDATE:
+      return ingredientAdapter.updateOne({
+        id: action.id,
+        changes: action.changes
+      }, state);
+    case IngredientActionType.DELETE:
+      return ingredientAdapter.removeOne(action.id, state);
     default:
       return state;
   }
 }
+
+export const getIngredientState = createFeatureSelector<IngredientState>('ingredient');
+
+export const {selectIds, selectEntities, selectAll, selectTotal} = ingredientAdapter.getSelectors(getIngredientState);

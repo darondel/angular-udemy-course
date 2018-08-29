@@ -2,23 +2,31 @@ import { Action } from '@ngrx/store';
 
 import { Ingredient } from "../../../shared/ingredient.model";
 
-export enum ShoppingActionType {
-  ADD_INGREDIENT = '[Shopping] Add Ingredient',
-  REMOVE_INGREDIENT = '[Shopping] Remove Ingredient'
+export enum IngredientActionType {
+  CREATE = '[Ingredient] Create',
+  UPDATE = '[Ingredient] Update',
+  DELETE = '[Ingredient] Delete'
 }
 
-export class AddIngredient implements Action {
-  readonly type = ShoppingActionType.ADD_INGREDIENT;
+export class Create implements Action {
+  readonly type = IngredientActionType.CREATE;
 
-  constructor(public payload: Ingredient) {
+  constructor(public ingredient: Ingredient) {
   }
 }
 
-export class RemoveIngredient implements Action {
-  readonly type = ShoppingActionType.REMOVE_INGREDIENT;
+export class Update implements Action {
+  readonly type = IngredientActionType.UPDATE;
 
-  constructor(public payload: Ingredient) {
+  constructor(public id: string, public changes: Partial<Ingredient>) {
   }
 }
 
-export type ShoppingAction = AddIngredient | RemoveIngredient;
+export class Delete implements Action {
+  readonly type = IngredientActionType.DELETE;
+
+  constructor(public id: string) {
+  }
+}
+
+export type IngredientAction = Create | Update | Delete;
