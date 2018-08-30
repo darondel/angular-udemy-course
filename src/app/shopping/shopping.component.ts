@@ -6,7 +6,7 @@ import { Dictionary } from "@ngrx/entity";
 import { Observable } from 'rxjs';
 
 import { Ingredient } from './store/models/ingredient.model';
-import { Delete, Update } from "./store/actions/ingredient.actions";
+import { DeleteOneFromShopping, UpdateOneFromShopping } from "./store/actions/ingredient.actions";
 import { IngredientState, selectEntities } from "./store/reducers/ingredient.reducer";
 
 @Component({
@@ -28,15 +28,15 @@ export class ShoppingComponent implements OnInit {
   }
 
   onIncrementAmount(id: string, ingredient: Ingredient) {
-    this.store.dispatch(new Update(id, {amount: ingredient.amount + 1}));
+    this.store.dispatch(new UpdateOneFromShopping(id, {amount: ingredient.amount + 1}));
   }
 
   onDecrementAmount(id: string, ingredient: Ingredient) {
-    this.store.dispatch(new Update(id, {amount: ingredient.amount - 1}));
+    this.store.dispatch(new UpdateOneFromShopping(id, {amount: ingredient.amount - 1}));
   }
 
   onRemoveIngredient(id: string) {
-    this.store.dispatch(new Delete(id));
+    this.store.dispatch(new DeleteOneFromShopping(id));
   }
 
 }

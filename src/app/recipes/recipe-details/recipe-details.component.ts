@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from "@ngrx/store";
 
 import { Recipe } from '../shared/recipe.model';
-import { Upsert } from "../../shopping/store/actions/ingredient.actions";
+import { UpsertOneFromRecipe } from "../../shopping/store/actions/ingredient.actions";
 import { IngredientState } from "../../shopping/store/reducers/ingredient.reducer";
 
 @Component({
@@ -27,7 +27,7 @@ export class RecipeDetailsComponent implements OnInit {
     const ingredients = this.recipe.ingredients;
 
     if (ingredients.length) {
-      ingredients.forEach(ingredient => this.store.dispatch(new Upsert(ingredient)));
+      ingredients.forEach(ingredient => this.store.dispatch(new UpsertOneFromRecipe(ingredient)));
     }
   }
 

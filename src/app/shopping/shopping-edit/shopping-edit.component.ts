@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from "@ngrx/store";
 
-import { Upsert } from "../store/actions/ingredient.actions";
+import { UpsertOneFromShopping } from "../store/actions/ingredient.actions";
 import { IngredientState } from "../store/reducers/ingredient.reducer";
 
 @Component({
@@ -30,7 +30,7 @@ export class ShoppingEditComponent implements OnInit {
   }
 
   onAdd() {
-    this.store.dispatch(new Upsert({
+    this.store.dispatch(new UpsertOneFromShopping({
       name: this.form.value.ingredientName,
       amount: this.form.value.ingredientAmount
     }));

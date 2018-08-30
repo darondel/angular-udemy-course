@@ -21,7 +21,8 @@ export const initialState: IngredientState = ingredientAdapter.getInitialState({
 
 export function ingredientReducer(state = initialState, action: IngredientAction): IngredientState {
   switch (action.type) {
-    case IngredientActionType.UPSERT:
+    case IngredientActionType.UPSERT_ONE_FROM_SHOPPING:
+    case IngredientActionType.UPSERT_ONE_FROM_RECIPE:
       const id = ingredientAdapter.selectId.call(null, action.ingredient);
 
       if (id in state.entities) {
@@ -34,12 +35,12 @@ export function ingredientReducer(state = initialState, action: IngredientAction
       } else {
         return ingredientAdapter.addOne(action.ingredient, state);
       }
-    case IngredientActionType.UPDATE:
+    case IngredientActionType.UPDATE_ONE_FROM_SHOPPING:
       return ingredientAdapter.updateOne({
         id: action.id,
         changes: action.changes
       }, state);
-    case IngredientActionType.DELETE:
+    case IngredientActionType.DELETE_ONE_FROM_SHOPPING:
       return ingredientAdapter.removeOne(action.id, state);
     default:
       return state;
