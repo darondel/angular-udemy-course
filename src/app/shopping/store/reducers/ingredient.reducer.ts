@@ -1,8 +1,8 @@
-import { createFeatureSelector } from "@ngrx/store";
-import { createEntityAdapter, EntityState } from "@ngrx/entity";
+import { createFeatureSelector } from '@ngrx/store';
+import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
-import { IngredientAction, IngredientActionType } from "../actions/ingredient.actions";
-import { Ingredient } from "../models/ingredient.model";
+import { IngredientAction, IngredientActionType } from '../actions/ingredient.actions';
+import { Ingredient } from '../models/ingredient.model';
 
 export const ingredientAdapter = createEntityAdapter<Ingredient>({
   selectId: ingredient => ingredient.name.toLowerCase()
@@ -47,6 +47,6 @@ export function ingredientReducer(state = initialState, action: IngredientAction
   }
 }
 
-export const getIngredientState = createFeatureSelector<IngredientState>('ingredient');
+export const selectIngredientState = createFeatureSelector<IngredientState>('ingredient');
 
-export const {selectIds, selectEntities, selectAll, selectTotal} = ingredientAdapter.getSelectors(getIngredientState);
+export const {selectIds, selectEntities, selectAll, selectTotal} = ingredientAdapter.getSelectors(selectIngredientState);
