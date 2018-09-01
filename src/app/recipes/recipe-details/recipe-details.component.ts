@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Store } from "@ngrx/store";
+import { Store } from '@ngrx/store';
 
 import { Recipe } from '../shared/recipe.model';
-import { UpsertOneFromRecipe } from "../../shopping/store/actions/ingredient.actions";
-import { IngredientState } from "../../shopping/store/reducers/ingredient.reducer";
+import { AppState } from '../../app.reducers';
+import { UpsertOneFromRecipe } from '../../shopping/store/actions/ingredient.actions';
 
 @Component({
   selector: 'app-recipe-details',
@@ -16,7 +16,7 @@ export class RecipeDetailsComponent implements OnInit {
 
   recipe: Recipe;
 
-  constructor(private route: ActivatedRoute, private store: Store<IngredientState>) {
+  constructor(private route: ActivatedRoute, private store: Store<AppState>) {
   }
 
   ngOnInit() {

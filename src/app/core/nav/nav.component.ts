@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { select, Store } from "@ngrx/store";
+import { select, Store } from '@ngrx/store';
 
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
+import { AppState } from '../../app.reducers';
 import { AuthService } from '../../auth/shared/auth.service';
-import { IngredientState, selectTotal } from "../../shopping/store/reducers/ingredient.reducer";
+import { selectTotal } from '../../shopping/store/reducers/ingredient.reducer';
 
 @Component({
   selector: 'app-nav',
@@ -17,7 +18,7 @@ export class NavComponent implements OnInit {
 
   ingredientsNumber: Observable<number>;
 
-  constructor(private router: Router, protected authService: AuthService, private store: Store<IngredientState>) {
+  constructor(private router: Router, protected authService: AuthService, private store: Store<AppState>) {
   }
 
   ngOnInit() {
