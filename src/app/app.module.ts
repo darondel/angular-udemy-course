@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CoreModule } from './core/core.module';
 import { RecipesModule } from './recipes/recipes.module';
@@ -11,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { reducers } from './app.reducers';
 import { AuthInterceptor } from './auth/shared/auth.interceptor';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,9 @@ import { AuthInterceptor } from './auth/shared/auth.interceptor';
     BrowserModule,
     HttpClientModule,
     StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+      logOnly: environment.production
+    }),
     CoreModule,
     RecipesModule,
     AppRoutingModule
