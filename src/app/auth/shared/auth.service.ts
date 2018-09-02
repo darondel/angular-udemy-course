@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, ReplaySubject } from "rxjs";
-import { map } from "rxjs/operators";
+import { Store } from '@ngrx/store';
 
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
-import User = firebase.User;
+
+import { Login, LogoutConfirmed } from '../store/actions/auth.actions';
+import { AppState } from '../../app.reducers';
 import UserCredential = firebase.auth.UserCredential;
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
@@ -15,26 +16,22 @@ import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
 })
 export class AuthService {
 
-  private user = new ReplaySubject<User>(1);
+  private static readonly ID_TOKEN = 'id_token';
 
-  token: string;
-
-  constructor() {
+  constructor(private store: Store<AppState>) {
     firebase.auth().onIdTokenChanged(user => {
-      this.user.next(user);
-
       if (user) {
-        user.getIdToken().then(token => this.token = token);
+        this.store.dispatch(new Login(user));
+        user.getIdToken().then(token => localStorage.setItem(AuthService.ID_TOKEN, token));
       } else {
-        this.token = null;
+        this.store.dispatch(new LogoutConfirmed());
+        localStorage.removeItem(AuthService.ID_TOKEN);
       }
     });
   }
 
-  get isAuthenticated(): Observable<boolean> {
-    return this.user.pipe(
-      map(user => user !== null)
-    );
+  get token(): string {
+    return localStorage.getItem(AuthService.ID_TOKEN);
   }
 
   signup(email: string, password: string): Promise<UserCredential> {
