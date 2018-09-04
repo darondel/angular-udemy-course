@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { reducers } from './app.reducers';
 import { AuthInterceptor } from './auth/shared/auth.interceptor';
+import { AuthEffects } from './auth/store/effects/auth.effects';
 import { environment } from '../environments/environment';
 
 @NgModule({
@@ -26,7 +27,7 @@ import { environment } from '../environments/environment';
     StoreDevtoolsModule.instrument({
       logOnly: environment.production
     }),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AuthEffects]),
     CoreModule,
     RecipesModule,
     AppRoutingModule
