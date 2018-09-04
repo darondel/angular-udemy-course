@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
-import { AuthService } from '../shared/auth.service';
-import Error = firebase.auth.Error;
+import { Store } from '@ngrx/store';
+
+import { LoginWithEmailAndPassword } from '../store/actions/auth.actions';
+import { AppState } from '../../app.reducers';
 
 @Component({
   selector: 'app-signin',
@@ -13,9 +14,8 @@ import Error = firebase.auth.Error;
 export class SigninComponent implements OnInit {
 
   form: FormGroup;
-  error: Error;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) {
   }
 
   ngOnInit() {
@@ -26,9 +26,7 @@ export class SigninComponent implements OnInit {
   }
 
   onSubmit() {
-    this.authService.signinWithEmail(this.form.value.email, this.form.value.password)
-      .then(user => this.router.navigate(['']))
-      .catch(error => this.error = error);
+    this.store.dispatch(new LoginWithEmailAndPassword(this.form.value.email, this.form.value.password));
   }
 
 }

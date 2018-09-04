@@ -7,6 +7,10 @@
             <p class="mb-0">One Recipe to rule them all, One Recipe to find them, One Recipe to bring them all and in the darkness bind them.</p>
             <p class="blockquote-footer">A Recipe Maker from the fires of <cite title="Source Title">Mount Doom</cite></p>
           </blockquote>
+          <div *ngIf="error | async" class="alert alert-danger" role="alert">
+            {{ (error | async).message }}
+          </div>
+          <hr class="my-4">
           <app-signin></app-signin>
           <hr class="my-4">
           <app-signup></app-signup>

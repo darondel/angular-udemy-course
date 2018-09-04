@@ -6,7 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../app.reducers';
-import { AuthService } from '../../auth/shared/auth.service';
+import { Logout } from '../../auth/store/actions/auth.actions';
 import { selectAuthentication } from '../../auth/store/reducers/auth.reducers';
 import { selectTotal } from '../../shopping/store/reducers/ingredient.reducer';
 
@@ -20,7 +20,7 @@ export class NavComponent implements OnInit {
   isUserAuthenticated: Observable<boolean>;
   ingredientsNumber: Observable<number>;
 
-  constructor(private router: Router, private authService: AuthService, private store: Store<AppState>) {
+  constructor(private router: Router, private store: Store<AppState>) {
   }
 
   ngOnInit() {
@@ -33,8 +33,7 @@ export class NavComponent implements OnInit {
   }
 
   onLogout() {
-    this.authService.signout();
-    this.router.navigate(['']);
+    this.store.dispatch(new Logout());
   }
 
 }
