@@ -9,20 +9,7 @@ import UserCredential = firebase.auth.UserCredential;
 })
 export class AuthService {
 
-  private static readonly ID_TOKEN = 'id_token';
-
   constructor() {
-    firebase.auth().onIdTokenChanged(user => {
-      if (user) {
-        user.getIdToken().then(token => localStorage.setItem(AuthService.ID_TOKEN, token));
-      } else {
-        localStorage.removeItem(AuthService.ID_TOKEN);
-      }
-    });
-  }
-
-  get token(): string {
-    return localStorage.getItem(AuthService.ID_TOKEN);
   }
 
   signup(email: string, password: string): Promise<UserCredential> {
