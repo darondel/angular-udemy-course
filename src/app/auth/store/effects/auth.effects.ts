@@ -42,13 +42,13 @@ export class AuthEffects {
   @Effect()
   loginWithGoogle = this.actions.pipe(
     ofType<LoginWithGoogle>(AuthActionType.LOGIN_WITH_GOOGLE),
-    exhaustMap(action => this.commonLogin(firebase.auth().signInWithPopup(new GoogleAuthProvider())))
+    exhaustMap(() => this.commonLogin(firebase.auth().signInWithPopup(new GoogleAuthProvider())))
   );
 
   @Effect()
   loginWithFacebook = this.actions.pipe(
     ofType<LoginWithFacebook>(AuthActionType.LOGIN_WITH_FACEBOOK),
-    exhaustMap(action => this.commonLogin(firebase.auth().signInWithPopup(new FacebookAuthProvider())))
+    exhaustMap(() => this.commonLogin(firebase.auth().signInWithPopup(new FacebookAuthProvider())))
   );
 
   @Effect({dispatch: false})
@@ -60,7 +60,7 @@ export class AuthEffects {
   @Effect()
   logout = this.actions.pipe(
     ofType<Logout>(AuthActionType.LOGOUT),
-    exhaustMap(action => from(firebase.auth().signOut()).pipe(
+    exhaustMap(() => from(firebase.auth().signOut()).pipe(
       map(() => new LogoutSuccess())
     ))
   );
