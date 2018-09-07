@@ -18,12 +18,14 @@ export const initialState: AuthState = {
 export function authReducer(state = initialState, action: AuthAction | AuthAPIAction): AuthState {
   switch (action.type) {
     case AuthAPIActionType.LOGIN_SUCCESS:
+    case AuthAPIActionType.SIGNUP_SUCCESS:
       return {
         ...state,
         user: action.user,
         error: null
       };
     case AuthAPIActionType.LOGIN_FAILURE:
+    case AuthAPIActionType.SIGNUP_FAILURE:
       return {
         ...state,
         user: null,
