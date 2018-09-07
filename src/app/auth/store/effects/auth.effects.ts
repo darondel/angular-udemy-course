@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
 
-import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
+import { catchError, exhaustMap, map, switchMap, tap } from 'rxjs/operators';
 import { from, Observable, of } from 'rxjs';
 
 import * as firebase from 'firebase/app';
@@ -36,7 +36,7 @@ export class AuthEffects {
   @Effect()
   loginWithEmailAndPassword = this.actions.pipe(
     ofType<LoginWithEmailAndPassword>(AuthActionType.LOGIN_WITH_EMAIL_AND_PASSWORD),
-    exhaustMap(action => this.commonLogin(firebase.auth().signInWithEmailAndPassword(action.email, action.password)))
+    switchMap(action => this.commonLogin(firebase.auth().signInWithEmailAndPassword(action.email, action.password)))
   );
 
   @Effect()
@@ -74,7 +74,7 @@ export class AuthEffects {
   @Effect()
   signup = this.actions.pipe(
     ofType<Signup>(AuthActionType.SIGNUP),
-    exhaustMap(action => from(firebase.auth().createUserWithEmailAndPassword(action.email, action.password)).pipe(
+    switchMap(action => from(firebase.auth().createUserWithEmailAndPassword(action.email, action.password)).pipe(
       map(userCredential => new SignupSucess(userCredential.user)),
       catchError(error => of(new SignupFailure(error)))
     ))
