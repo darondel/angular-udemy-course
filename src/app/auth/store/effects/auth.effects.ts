@@ -14,14 +14,17 @@ import {
   LoginWithEmailAndPassword,
   LoginWithFacebook,
   LoginWithGoogle,
-  Logout
+  Logout,
+  Signup
 } from '../actions/auth.actions';
 import {
   AuthAPIAction,
   AuthAPIActionType,
   LoginFailure,
   LoginSuccess,
-  LogoutSuccess
+  LogoutSuccess,
+  SignupFailure,
+  SignupSucess
 } from '../actions/auth-api.actions';
 import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
 import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
@@ -68,6 +71,21 @@ export class AuthEffects {
     tap(() => this.router.navigate(['']))
   );
 
+  @Effect()
+  signup = this.actions.pipe(
+    ofType<Signup>(AuthActionType.SIGNUP),
+    exhaustMap(action => from(firebase.auth().createUserWithEmailAndPassword(action.email, action.password)).pipe(
+      map(userCredential => new SignupSucess(userCredential.user)),
+      catchError(error => of(new SignupFailure(error)))
+    ))
+  );
+
+  @Effect({dispatch: false})
+  signupSuccess = this.actions.pipe(
+    ofType<SignupSucess>(AuthAPIActionType.SIGNUP_SUCCESS),
+    tap(() => this.router.navigate(['']))
+  );
+
   constructor(private actions: Actions, private router: Router) {
   }
 
@@ -75,6 +93,7 @@ export class AuthEffects {
    * Dispatch the login action according to a Firebase response.
    *
    * @param response the Firebase response
+   * @return the login action
    */
   private commonLogin(response: Promise<UserCredential>): Observable<AuthAPIAction> {
     return from(response).pipe(
