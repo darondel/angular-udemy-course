@@ -51,24 +51,12 @@ export class AuthEffects {
     exhaustMap(() => this.commonLogin(firebase.auth().signInWithPopup(new FacebookAuthProvider())))
   );
 
-  @Effect({dispatch: false})
-  loginSuccess = this.actions.pipe(
-    ofType<LoginSuccess>(AuthAPIActionType.LOGIN_SUCCESS),
-    tap(() => this.router.navigate(['']))
-  );
-
   @Effect()
   logout = this.actions.pipe(
     ofType<Logout>(AuthActionType.LOGOUT),
     exhaustMap(() => from(firebase.auth().signOut()).pipe(
       map(() => new LogoutSuccess())
     ))
-  );
-
-  @Effect({dispatch: false})
-  logoutSuccess = this.actions.pipe(
-    ofType<LogoutSuccess>(AuthAPIActionType.LOGOUT_SUCCESS),
-    tap(() => this.router.navigate(['']))
   );
 
   @Effect()
@@ -81,8 +69,12 @@ export class AuthEffects {
   );
 
   @Effect({dispatch: false})
-  signupSuccess = this.actions.pipe(
-    ofType<SignupSucess>(AuthAPIActionType.SIGNUP_SUCCESS),
+  redirect = this.actions.pipe(
+    ofType(
+      AuthAPIActionType.LOGIN_SUCCESS,
+      AuthAPIActionType.LOGOUT_SUCCESS,
+      AuthAPIActionType.SIGNUP_SUCCESS
+    ),
     tap(() => this.router.navigate(['']))
   );
 
