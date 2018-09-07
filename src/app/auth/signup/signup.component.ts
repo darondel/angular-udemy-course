@@ -3,8 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
 
-import { AuthService } from '../shared/auth.service';
-import { LoginWithFacebook, LoginWithGoogle } from '../store/actions/auth.actions';
+import { LoginWithFacebook, LoginWithGoogle, Signup } from '../store/actions/auth.actions';
 import { AppState } from '../../app.reducers';
 
 @Component({
@@ -17,7 +16,7 @@ export class SignupComponent implements OnInit {
   showForm = false;
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private store: Store<AppState>, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) {
   }
 
   ngOnInit() {
@@ -36,7 +35,7 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmitForm() {
-    this.authService.signup(this.form.value.email, this.form.value.password);
+    this.store.dispatch(new Signup(this.form.value.email, this.form.value.password));
   }
 
   onContinueWithGoogle() {
