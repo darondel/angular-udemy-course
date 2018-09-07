@@ -5,6 +5,7 @@ export enum AuthActionType {
   LOGIN_WITH_GOOGLE = '[Login Page] Login with Google',
   LOGIN_WITH_FACEBOOK = '[Login Page] Login with Facebook',
   LOGOUT = '[Navigation Menu] Logout',
+  SIGNUP = '[Login Page] Signup'
 }
 
 export class LoginWithEmailAndPassword implements Action {
@@ -35,8 +36,16 @@ export class Logout implements Action {
   }
 }
 
+export class Signup implements Action {
+  readonly type = AuthActionType.SIGNUP;
+
+  constructor(public email: string, public password: string) {
+  }
+}
+
 export type AuthAction =
   LoginWithEmailAndPassword |
   LoginWithGoogle |
   LoginWithFacebook |
-  Logout;
+  Logout |
+  Signup;
