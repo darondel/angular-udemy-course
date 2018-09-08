@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../store/models/recipe.model';
 import { AppState } from '../../app.reducers';
 import { UpsertOneFromRecipe } from '../../shopping/store/actions/ingredient.actions';
 

@@ -2,7 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../store/models/recipe.model';
 import { RecipeService } from '../shared/recipe.service';
 import { Ingredient } from '../../shopping/store/models/ingredient.model';
 import { ImageValidator } from '../../shared/image-validator.directive';
@@ -62,7 +62,7 @@ export class RecipeEditComponent implements OnInit {
     const recipe = this.form.value;
 
     if (id) {
-      this.recipeService.updateRecipe(id, recipe).subscribe(updatedRecipe => {
+      this.recipeService.updateRecipe(id, recipe).subscribe(() => {
         this.router.navigate(['../'], {relativeTo: this.route});
       });
     } else {

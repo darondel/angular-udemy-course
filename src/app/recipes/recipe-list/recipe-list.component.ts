@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../store/models/recipe.model';
 import { RecipeService } from '../shared/recipe.service';
 
 @Component({

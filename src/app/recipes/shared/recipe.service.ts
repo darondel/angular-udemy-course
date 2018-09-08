@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Recipe } from './recipe.model';
+import { Recipe } from '../store/models/recipe.model';
 
 const BACKEND_URL = 'https://udemy-super-mega-recipe-book.firebaseio.com';
 const RECIPE_STORE = 'recipes';

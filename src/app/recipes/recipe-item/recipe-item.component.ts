@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../store/models/recipe.model';
 import { RecipeService } from '../shared/recipe.service';
 
 @Component({

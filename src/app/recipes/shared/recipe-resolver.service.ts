@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@a
 
 import { Observable } from 'rxjs';
 
-import { Recipe } from './recipe.model';
+import { Recipe } from '../store/models/recipe.model';
 import { RecipeService } from './recipe.service';
 
 @Injectable({
