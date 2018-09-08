@@ -6,8 +6,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 
-import { AppState } from '../../app.reducers';
-import { selectAuthentication } from '../store/reducers/auth.reducers';
+import { AppState, isAuthUserAuthenticated } from '../../app.reducers';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.store.pipe(
-      select(selectAuthentication),
+      select(isAuthUserAuthenticated),
       first(),
       tap(isAuthenticated => {
         if (!isAuthenticated) {

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observable } from 'rxjs';
-
 import { select, Store } from '@ngrx/store';
 
-import { selectError } from './store/reducers/auth.reducers';
-import { AppState } from '../app.reducers';
+import { Observable } from 'rxjs';
+
+import { AppState, getAuthError } from '../app.reducers';
 import Error = firebase.auth.Error;
 
 @Component({
@@ -22,7 +21,7 @@ export class AuthComponent implements OnInit {
 
   ngOnInit() {
     this.error = this.store.pipe(
-      select(selectError)
+      select(getAuthError)
     );
   }
 

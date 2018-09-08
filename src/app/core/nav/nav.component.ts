@@ -5,9 +5,8 @@ import { select, Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 
-import { AppState } from '../../app.reducers';
+import { AppState, isAuthUserAuthenticated } from '../../app.reducers';
 import { Logout } from '../../auth/store/actions/auth.actions';
-import { selectAuthentication } from '../../auth/store/reducers/auth.reducers';
 
 @Component({
   selector: 'app-nav',
@@ -23,7 +22,7 @@ export class NavComponent implements OnInit {
 
   ngOnInit() {
     this.isUserAuthenticated = this.store.pipe(
-      select(selectAuthentication)
+      select(isAuthUserAuthenticated)
     );
   }
 

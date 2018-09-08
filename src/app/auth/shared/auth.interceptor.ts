@@ -8,8 +8,7 @@ import { first, map, switchMap } from 'rxjs/operators';
 
 import { User } from 'firebase';
 
-import { selectUser } from '../store/reducers/auth.reducers';
-import { AppState } from '../../app.reducers';
+import { AppState, getAuthUser } from '../../app.reducers';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -19,7 +18,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.store.pipe(
-      select(selectUser),
+      select(getAuthUser),
       first(),
       switchMap(user => this.getIdToken(user)),
       map(idToken => this.getRequest(req, idToken)),

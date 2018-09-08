@@ -1,5 +1,3 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-
 import { User } from 'firebase';
 import { AuthAction } from '../actions/auth.actions';
 import { AuthAPIAction, AuthAPIActionType } from '../actions/auth-api.actions';
@@ -38,8 +36,6 @@ export function authReducer(state = initialState, action: AuthAction | AuthAPIAc
   }
 }
 
-export const selectAuthState = createFeatureSelector<AuthState>('auth');
-
-export const selectUser = createSelector(selectAuthState, state => state.user);
-export const selectError = createSelector(selectAuthState, state => state.error);
-export const selectAuthentication = createSelector(selectUser, user => user !== null);
+export const getUser = (state: AuthState) => state.user;
+export const getError = (state: AuthState) => state.error;
+export const isUserAuthenticated = (state: AuthState) => state.user !== null;
