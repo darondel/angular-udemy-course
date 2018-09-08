@@ -7,8 +7,7 @@ import { Observable } from 'rxjs';
 
 import { Ingredient } from './store/models/ingredient.model';
 import { DeleteOneFromShopping, UpdateOneFromShopping } from './store/actions/ingredient.actions';
-import { selectEntities } from './store/reducers/ingredient.reducer';
-import { AppState } from '../app.reducers';
+import { getIngredientEntities, ShoppingFeatureState } from './store/reducers/shopping.reducer';
 
 @Component({
   selector: 'app-shopping',
@@ -19,12 +18,12 @@ export class ShoppingComponent implements OnInit {
 
   ingredients: Observable<Dictionary<Ingredient>>;
 
-  constructor(private store: Store<AppState>) {
+  constructor(private store: Store<ShoppingFeatureState>) {
   }
 
   ngOnInit() {
     this.ingredients = this.store.pipe(
-      select(selectEntities)
+      select(getIngredientEntities)
     );
   }
 

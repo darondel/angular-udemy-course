@@ -1,4 +1,3 @@
-import { createFeatureSelector } from '@ngrx/store';
 import { createEntityAdapter, EntityState } from '@ngrx/entity';
 
 import { IngredientAction, IngredientActionType } from '../actions/ingredient.actions';
@@ -46,7 +45,3 @@ export function ingredientReducer(state = initialState, action: IngredientAction
       return state;
   }
 }
-
-export const selectIngredientState = createFeatureSelector<IngredientState>('ingredient');
-
-export const {selectIds, selectEntities, selectAll, selectTotal} = ingredientAdapter.getSelectors(selectIngredientState);

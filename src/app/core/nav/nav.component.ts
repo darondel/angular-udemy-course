@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { AppState } from '../../app.reducers';
 import { Logout } from '../../auth/store/actions/auth.actions';
 import { selectAuthentication } from '../../auth/store/reducers/auth.reducers';
-import { selectTotal } from '../../shopping/store/reducers/ingredient.reducer';
 
 @Component({
   selector: 'app-nav',
@@ -18,7 +17,6 @@ import { selectTotal } from '../../shopping/store/reducers/ingredient.reducer';
 export class NavComponent implements OnInit {
 
   isUserAuthenticated: Observable<boolean>;
-  ingredientsNumber: Observable<number>;
 
   constructor(private router: Router, private store: Store<AppState>) {
   }
@@ -26,9 +24,6 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     this.isUserAuthenticated = this.store.pipe(
       select(selectAuthentication)
-    );
-    this.ingredientsNumber = this.store.pipe(
-      select(selectTotal)
     );
   }
 
