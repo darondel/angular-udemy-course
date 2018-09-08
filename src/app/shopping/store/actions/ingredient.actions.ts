@@ -1,12 +1,12 @@
 import { Action } from '@ngrx/store';
 
-import { Ingredient } from "../models/ingredient.model";
+import { Ingredient } from '../models/ingredient.model';
 
 export enum IngredientActionType {
-  UPSERT_ONE_FROM_RECIPE = '[Recipe Page] Upsert One',
-  UPSERT_ONE_FROM_SHOPPING = '[Shopping Page] Upsert One',
-  UPDATE_ONE_FROM_SHOPPING = '[Shopping Page] Update One',
-  DELETE_ONE_FROM_SHOPPING = '[Shopping Page] Delete One'
+  UPSERT_ONE_FROM_RECIPE = '[Recipe Page] Upsert One Ingredient',
+  UPSERT_ONE_FROM_SHOPPING = '[Shopping Page] Upsert One Ingredient',
+  UPDATE_ONE_FROM_SHOPPING = '[Shopping Page] Update One Ingredient',
+  DELETE_ONE_FROM_SHOPPING = '[Shopping Page] Delete One Ingredient'
 }
 
 export class UpsertOneFromRecipe implements Action {
