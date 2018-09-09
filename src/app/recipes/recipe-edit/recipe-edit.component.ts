@@ -1,11 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { Store } from '@ngrx/store';
+
+import { AddOneFromRecipeEdit, UpdateOneFromRecipeEdit } from '../store/actions/recipe.actions';
 import { Recipe } from '../store/models/recipe.model';
-import { RecipeService } from '../shared/recipe.service';
-import { Ingredient } from '../../shopping/store/models/ingredient.model';
+import { RecipesFeatureState } from '../store/reducers/recipes.reducer';
 import { ImageValidator } from '../../shared/image-validator.directive';
+import { Ingredient } from '../../shopping/store/models/ingredient.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -22,9 +25,8 @@ export class RecipeEditComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private router: Router,
     private route: ActivatedRoute,
-    private recipeService: RecipeService) {
+    private store: Store<RecipesFeatureState>) {
   }
 
   ngOnInit() {
@@ -62,13 +64,9 @@ export class RecipeEditComponent implements OnInit {
     const recipe = this.form.value;
 
     if (id) {
-      this.recipeService.updateRecipe(id, recipe).subscribe(() => {
-        this.router.navigate(['../'], {relativeTo: this.route});
-      });
+      this.store.dispatch(new UpdateOneFromRecipeEdit(id, recipe));
     } else {
-      this.recipeService.addRecipe(recipe).subscribe(recipeId => {
-        this.router.navigate(['../' + recipeId], {relativeTo: this.route});
-      });
+      this.store.dispatch(new AddOneFromRecipeEdit(recipe));
     }
   }
 

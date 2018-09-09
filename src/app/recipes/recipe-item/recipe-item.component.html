@@ -7,7 +7,9 @@
       <div class="btn-group">
         <button type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="[id]">View</button>
         <button type="button" class="btn btn-sm btn-outline-secondary" [routerLink]="[id, 'edit']">Edit</button>
-        <button type="button" class="btn btn-sm btn-outline-danger" (click)="onDelete()">Delete</button>
+        <button type="button" class="btn btn-sm btn-outline-danger" (click)="onDelete()"
+                [disabled]="!(isUserAuthenticated | async)">Delete
+        </button>
       </div>
     </div>
   </div>

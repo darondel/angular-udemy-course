@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 
+import { select, Store } from '@ngrx/store';
+import { Dictionary } from '@ngrx/entity';
+
 import { Observable } from 'rxjs';
 
+import { LoadAllFromRecipeList } from '../store/actions/recipe.actions';
 import { Recipe } from '../store/models/recipe.model';
-import { RecipeService } from '../shared/recipe.service';
+import { getRecipeEntities, RecipesFeatureState } from '../store/reducers/recipes.reducer';
 
 @Component({
   selector: 'app-recipe-list',
@@ -12,13 +16,16 @@ import { RecipeService } from '../shared/recipe.service';
 })
 export class RecipeListComponent implements OnInit {
 
-  recipes: Observable<[string, Recipe][]>;
+  recipes: Observable<Dictionary<Recipe>>;
 
-  constructor(private recipeService: RecipeService) {
+  constructor(private store: Store<RecipesFeatureState>) {
   }
 
   ngOnInit() {
-    this.recipes = this.recipeService.getRecipes();
+    this.store.dispatch(new LoadAllFromRecipeList());
+    this.recipes = this.store.pipe(
+      select(getRecipeEntities)
+    );
   }
 
 }
