@@ -22,7 +22,7 @@ import { environment } from '../environments/environment';
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({appId: 'udemy-super-mega-recipe-book'}),
     HttpClientModule,
     StoreModule.forRoot(reducers),
     StoreRouterConnectingModule.forRoot(),
