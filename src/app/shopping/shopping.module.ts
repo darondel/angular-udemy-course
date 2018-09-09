@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { ShoppingRoutingModule } from "./shopping-routing.module";
+import { StoreModule } from '@ngrx/store';
 
-import { ShoppingComponent } from "./shopping.component";
-import { ShoppingEditComponent } from "./shopping-edit/shopping-edit.component";
+import { ShoppingRoutingModule } from './shopping-routing.module';
+
+import { ShoppingComponent } from './shopping.component';
+import { ShoppingEditComponent } from './shopping-edit/shopping-edit.component';
+import { shoppingReducers } from './store/reducers/shopping.reducer';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    StoreModule.forFeature('shopping', shoppingReducers),
     ShoppingRoutingModule
   ],
   declarations: [

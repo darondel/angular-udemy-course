@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 
-import { AuthService } from '../shared/auth.service';
-import Error = firebase.auth.Error;
+import { Store } from '@ngrx/store';
+
+import { LoginWithFacebook, LoginWithGoogle, Signup } from '../store/actions/auth.actions';
+import { AppState } from '../../app.reducers';
 
 @Component({
   selector: 'app-signup',
@@ -14,9 +15,8 @@ export class SignupComponent implements OnInit {
 
   showForm = false;
   form: FormGroup;
-  error: Error;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) {
   }
 
   ngOnInit() {
@@ -35,21 +35,15 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmitForm() {
-    this.authService.signup(this.form.value.email, this.form.value.password)
-      .then(user => this.router.navigate(['']))
-      .catch(error => this.error = error);
+    this.store.dispatch(new Signup(this.form.value.email, this.form.value.password));
   }
 
   onContinueWithGoogle() {
-    this.authService.signinWithGoogle()
-      .then(user => this.router.navigate(['']))
-      .catch(error => this.error = error);
+    this.store.dispatch(new LoginWithGoogle());
   }
 
   onContinueWithFacebook() {
-    this.authService.signinWithFacebook()
-      .then(user => this.router.navigate(['']))
-      .catch(error => this.error = error);
+    this.store.dispatch(new LoginWithFacebook());
   }
 
 }

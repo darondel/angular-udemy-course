@@ -1,8 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { Recipe } from '../shared/recipe.model';
-import { RecipeService } from '../shared/recipe.service';
+import { select, Store } from '@ngrx/store';
+
+import { Observable } from 'rxjs';
+
+import { DeleteOneFromRecipeItem } from '../store/actions/recipe.actions';
+import { Recipe } from '../store/models/recipe.model';
+import { RecipesFeatureState } from '../store/reducers/recipes.reducer';
+import { isAuthUserAuthenticated } from '../../app.reducers';
 
 @Component({
   selector: 'app-recipe-item',
@@ -14,10 +19,15 @@ export class RecipeItemComponent implements OnInit {
   @Input() id: string;
   @Input() recipe: Recipe;
 
-  constructor(private router: Router, private recipeService: RecipeService) {
+  isUserAuthenticated: Observable<boolean>;
+
+  constructor(private store: Store<RecipesFeatureState>) {
   }
 
   ngOnInit() {
+    this.isUserAuthenticated = this.store.pipe(
+      select(isAuthUserAuthenticated)
+    );
   }
 
   onImageError(event) {
@@ -25,11 +35,7 @@ export class RecipeItemComponent implements OnInit {
   }
 
   onDelete() {
-    this.recipeService.deleteRecipe(this.id).subscribe();
-
-    if (this.router.url.startsWith('/recipes/' + this.id)) {
-      this.router.navigate(['/recipes']);
-    }
+    this.store.dispatch(new DeleteOneFromRecipeItem(this.id));
   }
 
 }

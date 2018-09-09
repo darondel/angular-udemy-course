@@ -1,36 +1,33 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subscription } from 'rxjs';
+import { select, Store } from '@ngrx/store';
 
-import { AuthService } from '../../auth/shared/auth.service';
-import { Ingredient } from '../../shared/ingredient.model';
-import { ShoppingService } from '../../shopping/shared/shopping.service';
+import { Observable } from 'rxjs';
+
+import { AppState, isAuthUserAuthenticated } from '../../app.reducers';
+import { Logout } from '../../auth/store/actions/auth.actions';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit, OnDestroy {
+export class NavComponent implements OnInit {
 
-  ingredientsSubscription: Subscription;
-  ingredients: Ingredient[];
+  isUserAuthenticated: Observable<boolean>;
 
-  constructor(private router: Router, protected authService: AuthService, private shoppingService: ShoppingService) {
+  constructor(private router: Router, private store: Store<AppState>) {
   }
 
   ngOnInit() {
-    this.ingredientsSubscription = this.shoppingService.getIngredients().subscribe(ingredients => this.ingredients = ingredients);
-  }
-
-  ngOnDestroy() {
-    this.ingredientsSubscription.unsubscribe();
+    this.isUserAuthenticated = this.store.pipe(
+      select(isAuthUserAuthenticated)
+    );
   }
 
   onLogout() {
-    this.authService.signout();
-    this.router.navigate(['']);
+    this.store.dispatch(new Logout());
   }
 
 }

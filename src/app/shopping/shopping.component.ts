@@ -1,41 +1,42 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { Subscription } from 'rxjs';
+import { select, Store } from '@ngrx/store';
+import { Dictionary } from '@ngrx/entity';
 
-import { ShoppingService } from './shared/shopping.service';
-import { Ingredient } from '../shared/ingredient.model';
+import { Observable } from 'rxjs';
+
+import { Ingredient } from './store/models/ingredient.model';
+import { DeleteOneFromShopping, UpdateOneFromShopping } from './store/actions/ingredient.actions';
+import { getIngredientEntities, ShoppingFeatureState } from './store/reducers/shopping.reducer';
 
 @Component({
   selector: 'app-shopping',
   templateUrl: './shopping.component.html',
   styleUrls: ['./shopping.component.css']
 })
-export class ShoppingComponent implements OnInit, OnDestroy {
+export class ShoppingComponent implements OnInit {
 
-  ingredientsSubscription: Subscription;
-  ingredients: Ingredient[];
+  ingredients: Observable<Dictionary<Ingredient>>;
 
-  constructor(private shoppingService: ShoppingService) {
+  constructor(private store: Store<ShoppingFeatureState>) {
   }
 
   ngOnInit() {
-    this.ingredientsSubscription = this.shoppingService.getIngredients().subscribe(ingredients => this.ingredients = ingredients);
+    this.ingredients = this.store.pipe(
+      select(getIngredientEntities)
+    );
   }
 
-  ngOnDestroy() {
-    this.ingredientsSubscription.unsubscribe();
+  onIncrementAmount(id: string, ingredient: Ingredient) {
+    this.store.dispatch(new UpdateOneFromShopping(id, {amount: ingredient.amount + 1}));
   }
 
-  onIncrementAmount(ingredient: Ingredient) {
-    ingredient.amount++;
+  onDecrementAmount(id: string, ingredient: Ingredient) {
+    this.store.dispatch(new UpdateOneFromShopping(id, {amount: ingredient.amount - 1}));
   }
 
-  onDecrementAmount(ingredient: Ingredient) {
-    ingredient.amount--;
-  }
-
-  onRemoveIngredient(ingredient: Ingredient) {
-    this.shoppingService.removeIngredients(ingredient);
+  onRemoveIngredient(id: string) {
+    this.store.dispatch(new DeleteOneFromShopping(id));
   }
 
 }

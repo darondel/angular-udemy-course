@@ -1,4 +1,4 @@
-import { Ingredient } from '../../shared/ingredient.model';
+import { Ingredient } from '../../../shopping/store/models/ingredient.model';
 
 export interface Recipe {
 
