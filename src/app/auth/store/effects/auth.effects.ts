@@ -26,9 +26,6 @@ import {
   SignupFailure,
   SignupSucess
 } from '../actions/auth-api.actions';
-import GoogleAuthProvider = firebase.auth.GoogleAuthProvider;
-import FacebookAuthProvider = firebase.auth.FacebookAuthProvider;
-import UserCredential = firebase.auth.UserCredential;
 
 @Injectable()
 export class AuthEffects {
@@ -42,13 +39,13 @@ export class AuthEffects {
   @Effect()
   loginWithGoogle = this.actions.pipe(
     ofType<LoginWithGoogle>(AuthActionType.LOGIN_WITH_GOOGLE),
-    exhaustMap(() => this.commonLogin(firebase.auth().signInWithPopup(new GoogleAuthProvider())))
+    exhaustMap(() => this.commonLogin(firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())))
   );
 
   @Effect()
   loginWithFacebook = this.actions.pipe(
     ofType<LoginWithFacebook>(AuthActionType.LOGIN_WITH_FACEBOOK),
-    exhaustMap(() => this.commonLogin(firebase.auth().signInWithPopup(new FacebookAuthProvider())))
+    exhaustMap(() => this.commonLogin(firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())))
   );
 
   @Effect()
@@ -87,7 +84,7 @@ export class AuthEffects {
    * @param response the Firebase response
    * @return the login action
    */
-  private commonLogin(response: Promise<UserCredential>): Observable<AuthAPIAction> {
+  private commonLogin(response: Promise<firebase.auth.UserCredential>): Observable<AuthAPIAction> {
     return from(response).pipe(
       map(userCredential => new LoginSuccess(userCredential.user)),
       catchError(error => of(new LoginFailure(error)))

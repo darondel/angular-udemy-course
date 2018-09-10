@@ -1,7 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { User } from 'firebase';
-import Error = firebase.auth.Error;
+import * as firebase from 'firebase/app';
 
 export enum AuthAPIActionType {
   LOGIN_SUCCESS = '[Auth API] Login Success',
@@ -14,14 +13,14 @@ export enum AuthAPIActionType {
 export class LoginSuccess implements Action {
   readonly type = AuthAPIActionType.LOGIN_SUCCESS;
 
-  constructor(public user: User) {
+  constructor(public user: firebase.User) {
   }
 }
 
 export class LoginFailure implements Action {
   readonly type = AuthAPIActionType.LOGIN_FAILURE;
 
-  constructor(public error: Error) {
+  constructor(public error: firebase.auth.Error) {
   }
 }
 
@@ -35,14 +34,14 @@ export class LogoutSuccess implements Action {
 export class SignupSucess implements Action {
   readonly type = AuthAPIActionType.SIGNUP_SUCCESS;
 
-  constructor(public user: User) {
+  constructor(public user: firebase.User) {
   }
 }
 
 export class SignupFailure implements Action {
   readonly type = AuthAPIActionType.SIGNUP_FAILURE;
 
-  constructor(public error: Error) {
+  constructor(public error: firebase.auth.Error) {
   }
 }
 

@@ -4,8 +4,9 @@ import { select, Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs';
 
+import * as firebase from 'firebase/app';
+
 import { AppState, getAuthError } from '../app.reducers';
-import Error = firebase.auth.Error;
 
 @Component({
   selector: 'app-auth',
@@ -14,7 +15,7 @@ import Error = firebase.auth.Error;
 })
 export class AuthComponent implements OnInit {
 
-  error: Observable<Error>;
+  error: Observable<firebase.auth.Error>;
 
   constructor(private store: Store<AppState>) {
   }

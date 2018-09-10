@@ -1,11 +1,11 @@
-import { User } from 'firebase';
+import * as firebase from 'firebase/app';
+
 import { AuthAction } from '../actions/auth.actions';
 import { AuthAPIAction, AuthAPIActionType } from '../actions/auth-api.actions';
-import Error = firebase.auth.Error;
 
 export interface AuthState {
-  user: User | null;
-  error: Error | null;
+  user: firebase.User | null;
+  error: firebase.auth.Error | null;
 }
 
 export const initialState: AuthState = {
