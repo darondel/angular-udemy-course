@@ -1,4 +1,4 @@
-<form *ngIf="showForm; else providers" [formGroup]="form" (ngSubmit)="onSubmitForm()">
+<form *ngIf="showForm" [@fadeIn] [formGroup]="form" (ngSubmit)="onSubmitForm()">
   <h6>Sign up</h6>
 
   <div class="form-group">
@@ -15,7 +15,7 @@
   <button type="submit" class="btn btn-success btn-block text-uppercase" [disabled]="form.invalid">Sign up</button>
 </form>
 
-<ng-template #providers>
+<div *ngIf="!showForm" [@fadeIn]>
   <button type="button" class="btn btn-google btn-block text-uppercase" (click)="onContinueWithGoogle()">
     <i class="fa fa-google mr-2"></i> Continue with Google
   </button>
@@ -25,4 +25,4 @@
   <button type="button" class="btn btn-info btn-block text-uppercase" (click)="onShowForm()">
     <i class="fa fa-at mr-2"></i> Continue with Email
   </button>
-</ng-template>
+</div>
