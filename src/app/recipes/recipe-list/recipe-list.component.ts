@@ -43,4 +43,15 @@ export class RecipeListComponent implements OnInit {
     );
   }
 
+  /**
+   * Track recipes in an iterable.
+   *
+   * @param index the index of the recipe in the iterable
+   * @param recipe the recipe
+   * @return the track id of the recipe
+   */
+  trackRecipe(index: number, recipe: { key: string, value: Recipe }): any {
+    return recipe.key;
+  }
+
 }
