@@ -1,5 +1,5 @@
 <div class="container-fluid py-5">
-  <div class="row">
+  <div class="row" [@recipeItemsAnimation]="recipesTotal">
     <div class="col-md-4" *ngFor="let recipe of recipes | async | keyvalue">
       <app-recipe-item [id]="recipe.key" [recipe]="recipe.value"></app-recipe-item>
     </div>

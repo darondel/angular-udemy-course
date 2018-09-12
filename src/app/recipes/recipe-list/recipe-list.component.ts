@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 import { select, Store } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
 
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { LoadAllFromRecipeList } from '../store/actions/recipe.actions';
 import { Recipe } from '../store/models/recipe.model';
@@ -12,11 +14,23 @@ import { getRecipeEntities, RecipesFeatureState } from '../store/reducers/recipe
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
-  styleUrls: ['./recipe-list.component.css']
+  styleUrls: ['./recipe-list.component.css'],
+  animations: [
+    trigger('recipeItemsAnimation', [
+      transition('* => *', [
+        query(':enter', [
+          style({opacity: 0, transform: 'translateY(-25px)'}),
+          stagger('250ms', animate('550ms ease-in', style({opacity: 1, transform: 'translateY(0)'})))
+        ], {optional: true}),
+        query(':leave', animate('300ms ease-out', style({opacity: 0})), {optional: true})
+      ])
+    ])
+  ]
 })
 export class RecipeListComponent implements OnInit {
 
   recipes: Observable<Dictionary<Recipe>>;
+  recipesTotal: number;
 
   constructor(private store: Store<RecipesFeatureState>) {
   }
@@ -24,7 +38,8 @@ export class RecipeListComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new LoadAllFromRecipeList());
     this.recipes = this.store.pipe(
-      select(getRecipeEntities)
+      select(getRecipeEntities),
+      tap(recipes => this.recipesTotal = Object.entries(recipes).length)
     );
   }
 
