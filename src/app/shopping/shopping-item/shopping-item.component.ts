@@ -25,7 +25,7 @@ export class ShoppingItemComponent {
    * @return true if the 'Delete' button is enabled, false otherwise
    */
   get isDeleteEnabled(): boolean {
-    return this.ingredient.amount < 2
+    return this.ingredient.amount > 1;
   }
 
   /**
