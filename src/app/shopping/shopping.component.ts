@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
+import { animate, group, query, stagger, style, transition, trigger } from '@angular/animations';
 
 import { select, Store } from '@ngrx/store';
 import { Dictionary } from '@ngrx/entity';
@@ -19,9 +19,18 @@ import { getIngredientEntities, ShoppingFeatureState } from './store/reducers/sh
       transition('* => *', [
         query(':enter', [
           style({opacity: 0}),
-          stagger(100, animate('.5s', style({opacity: 1})))
+          stagger(100, [
+            group([
+              animate('.25s', style({backgroundColor: 'palegreen'})),
+              animate('.5s', style({opacity: 1}))
+            ]),
+            animate('.5s', style({backgroundColor: 'transparent'}))
+          ])
         ], {optional: true}),
-        query(':leave', stagger(100, animate('.5s', style({opacity: 0}))), {optional: true})
+        query(':leave', stagger(100, group([
+          animate('.25s', style({backgroundColor: 'salmon'})),
+          animate('.5s', style({opacity: 0}))
+        ])), {optional: true})
       ])
     ])
   ]
