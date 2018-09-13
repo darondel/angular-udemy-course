@@ -8,6 +8,7 @@ import { ShoppingRoutingModule } from './shopping-routing.module';
 
 import { ShoppingComponent } from './shopping.component';
 import { ShoppingEditComponent } from './shopping-edit/shopping-edit.component';
+import { ShoppingItemComponent } from './shopping-item/shopping-item.component';
 import { shoppingReducers } from './store/reducers/shopping.reducer';
 
 @NgModule({
@@ -19,7 +20,8 @@ import { shoppingReducers } from './store/reducers/shopping.reducer';
   ],
   declarations: [
     ShoppingComponent,
-    ShoppingEditComponent
+    ShoppingEditComponent,
+    ShoppingItemComponent
   ]
 })
 export class ShoppingModule {

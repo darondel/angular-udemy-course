@@ -1,0 +1,13 @@
+<div class="d-flex align-items-center">
+  <span class="mr-auto">{{ ingredient.name }}</span>
+  <span class="badge badge-primary badge-pill mr-2">{{ ingredient.amount }}</span>
+  <button type="button" class="btn btn-sm btn-outline-success mr-2" (click)="onIncrementAmount()">
+    <i class="fa fa-plus"></i>
+  </button>
+  <button type="button" class="btn btn-sm btn-outline-warning mr-2" (click)="onDecrementAmount()" [disabled]="!isDeleteEnabled">
+    <i class="fa fa-minus"></i>
+  </button>
+  <button type="button" class="btn btn-sm btn-outline-danger" (click)="onRemoveIngredient()">
+    <i class="fa fa-remove"></i>
+  </button>
+</div>
