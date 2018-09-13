@@ -1,17 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { transition, trigger, useAnimation } from '@angular/animations';
 
 import { Store } from '@ngrx/store';
 
 import { LoginWithEmailAndPassword } from '../store/actions/auth.actions';
 import { AppState } from '../../app.reducers';
-import { fadeIn } from '../../shared/fade-in.animation';
+import { fadeInAnimation } from '../../shared/animations';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css'],
-  animations: [fadeIn(500)]
+  animations: [
+    trigger('fadeIn', [
+      transition(':enter', useAnimation(fadeInAnimation, {params: {timings: '.5s'}}))
+    ])
+  ]
 })
 export class SigninComponent implements OnInit {
 

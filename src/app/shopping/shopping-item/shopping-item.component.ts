@@ -1,20 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { animate, animation, keyframes, style, transition, trigger, useAnimation } from '@angular/animations';
+import { transition, trigger, useAnimation } from '@angular/animations';
 
 import { Store } from '@ngrx/store';
 
 import { DeleteOneFromShopping, UpdateOneFromShopping } from '../store/actions/ingredient.actions';
 import { Ingredient } from '../store/models/ingredient.model';
 import { ShoppingFeatureState } from '../store/reducers/shopping.reducer';
-
-export const bubbleAnimation = animation([
-  style({transform: 'scale(1)'}),
-  animate('{{ timings }}', keyframes([
-    style({transform: 'scale(1)', offset: 0}),
-    style({transform: 'scale({{ scale }})', offset: 0.5}),
-    style({transform: 'scale(1)', offset: 1})
-  ]))
-]);
+import { bubbleAnimation } from '../../shared/animations';
 
 @Component({
   selector: 'app-shopping-item',
