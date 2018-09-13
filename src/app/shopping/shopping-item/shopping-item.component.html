@@ -1,6 +1,6 @@
 <div class="d-flex align-items-center">
   <span class="mr-auto">{{ ingredient.name }}</span>
-  <span class="badge badge-primary badge-pill mr-2">{{ ingredient.amount }}</span>
+  <span class="badge badge-primary badge-pill mr-2" [@amountAnimation]="ingredient.amount">{{ ingredient.amount }}</span>
   <button type="button" class="btn btn-sm btn-outline-success mr-2" (click)="onIncrementAmount()">
     <i class="fa fa-plus"></i>
   </button>

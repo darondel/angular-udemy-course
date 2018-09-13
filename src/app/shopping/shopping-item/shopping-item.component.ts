@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 
 import { Store } from '@ngrx/store';
 
@@ -9,7 +10,27 @@ import { ShoppingFeatureState } from '../store/reducers/shopping.reducer';
 @Component({
   selector: 'app-shopping-item',
   templateUrl: './shopping-item.component.html',
-  styleUrls: ['./shopping-item.component.css']
+  styleUrls: ['./shopping-item.component.css'],
+  animations: [
+    trigger('amountAnimation', [
+      transition(':increment', [
+        style({transform: 'scale(1)'}),
+        animate(200, keyframes([
+          style({transform: 'scale(1)', offset: 0}),
+          style({transform: 'scale(1.2)', offset: 0.5}),
+          style({transform: 'scale(1)', offset: 1})
+        ]))
+      ]),
+      transition(':decrement', [
+        style({transform: 'scale(1)'}),
+        animate(200, keyframes([
+          style({transform: 'scale(1)', offset: 0}),
+          style({transform: 'scale(0.8)', offset: 0.5}),
+          style({transform: 'scale(1)', offset: 1})
+        ]))
+      ])
+    ])
+  ]
 })
 export class ShoppingItemComponent {
 
