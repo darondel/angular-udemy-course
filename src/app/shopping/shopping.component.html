@@ -9,7 +9,7 @@
     <div class="col-md-12">
       <h5>Shopping Cart</h5>
       <ul class="list-group" [@shoppingListAnimation]="ingredientsTotal">
-        <li class="list-group-item" *ngFor="let ingredient of ingredients | async | keyvalue">
+        <li class="list-group-item" *ngFor="let ingredient of ingredients | async | keyvalue; trackBy: trackIngredient">
           <app-shopping-item [id]="ingredient.key" [ingredient]="ingredient.value"></app-shopping-item>
         </li>
       </ul>
