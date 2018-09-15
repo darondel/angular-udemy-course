@@ -9,7 +9,12 @@
           "/favicon.ico",
           "/index.html",
           "/*.css",
-          "/*.js"
+          "/*.js",
+          "/*.eot",
+          "/*.svg",
+          "/*.woff2",
+          "/*.ttf",
+          "/*.woff"
         ]
       }
     }, {
