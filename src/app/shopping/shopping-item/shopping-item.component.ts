@@ -28,11 +28,11 @@ export class ShoppingItemComponent {
   }
 
   /**
-   * Tells whether the 'Delete' button is enabled or not.
+   * Tells whether the 'Decrement' button is enabled or not.
    *
-   * @return true if the 'Delete' button is enabled, false otherwise
+   * @return true if the 'Decrement' button is enabled, false otherwise
    */
-  get isDeleteEnabled(): boolean {
+  get isDecrementEnabled(): boolean {
     return this.ingredient.amount > 1;
   }
 
