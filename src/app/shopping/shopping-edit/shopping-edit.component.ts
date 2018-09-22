@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { UpsertOneFromShopping } from '../store/actions/ingredient.actions';
-import { AppState } from '../../app.reducers';
+import { ShoppingFeatureState } from '../store/reducers/shopping.reducer';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -15,7 +15,7 @@ export class ShoppingEditComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private store: Store<AppState>) {
+  constructor(private formBuilder: FormBuilder, private store: Store<ShoppingFeatureState>) {
   }
 
   ngOnInit() {
