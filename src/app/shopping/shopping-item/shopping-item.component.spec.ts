@@ -4,15 +4,12 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
 
 import { ShoppingItemComponent } from './shopping-item.component';
-import { Ingredient } from '../store/models/ingredient.model';
 import { ShoppingFeatureState, shoppingReducers } from '../store/reducers/shopping.reducer';
 import { DeleteOneFromShopping, UpdateOneFromShopping } from '../store/actions/ingredient.actions';
 
 describe('ShoppingItemComponent', () => {
   let fixture: ComponentFixture<ShoppingItemComponent>;
   let component: ShoppingItemComponent;
-  let id: string;
-  let ingredient: Ingredient;
   let store: Store<ShoppingFeatureState>;
 
   beforeEach(async(() => {
@@ -34,43 +31,16 @@ describe('ShoppingItemComponent', () => {
     fixture = TestBed.createComponent(ShoppingItemComponent);
     component = fixture.componentInstance;
 
-    // Mock the NgRx store dependency and spy on action dispatch.
+    // Mock the NgRx store dependency.
     store = TestBed.get(Store);
-    spyOn(store, 'dispatch').and.callThrough();
 
-    // Mock the ingredient supplied by the parent component.
-    id = 'tomato';
-    ingredient = {name: 'Tomato', amount: 2};
-
-    // Simulate the parent setting the Input() properties with that ingredient.
-    component.id = id;
-    component.ingredient = ingredient;
+    // Mock the input properties.
+    component.id = 'tomato';
+    component.ingredient = {name: 'Tomato', amount: 2};
 
     // Trigger data binding.
     fixture.detectChanges();
   });
-
-  function isTextDisplayed(text: any, selector: string): boolean {
-    let result = false;
-
-    for (const element of fixture.nativeElement.querySelectorAll(selector)) {
-      result = result || element.textContent.includes(text);
-    }
-
-    return result;
-  }
-
-  function getButton(text: any): HTMLButtonElement {
-    let result = null;
-
-    for (const button of fixture.nativeElement.querySelectorAll('button')) {
-      if (button.innerHTML.includes(text)) {
-        result = button;
-      }
-    }
-
-    return result;
-  }
 
   describe('Constructor', () => {
     it('should create the component', () => {
@@ -78,57 +48,164 @@ describe('ShoppingItemComponent', () => {
     });
   });
 
+  describe('Properties', () => {
+    describe('isDecrementEnabled', () => {
+      it('should be true if the ingredient amount is greater than one', () => {
+        component.ingredient = {...component.ingredient, amount: 2};
+        fixture.detectChanges();
+
+        expect(component.isDecrementEnabled).toBe(true);
+      });
+
+      it('should be false if the ingredient amount is less or equal to one', () => {
+        component.ingredient = {...component.ingredient, amount: 1};
+        fixture.detectChanges();
+
+        expect(component.isDecrementEnabled).toBe(false);
+      });
+    });
+  });
+
+  describe('Operations', () => {
+    beforeEach(() => {
+      spyOn(store, 'dispatch').and.callThrough();
+    });
+
+    describe('onIncrementAmount', () => {
+      it('should dispatch a UPDATE_ONE_FROM_SHOPPING store action by incrementing the ingredient amount', () => {
+        const action = new UpdateOneFromShopping(component.id, {amount: component.ingredient.amount + 1});
+
+        component.onIncrementAmount();
+
+        expect(store.dispatch).toHaveBeenCalledWith(action);
+      });
+    });
+
+    describe('onDecrementAmount', () => {
+      it('should dispatch a UPDATE_ONE_FROM_SHOPPING store action by decrementing the ingredient amount', () => {
+        const action = new UpdateOneFromShopping(component.id, {amount: component.ingredient.amount - 1});
+
+        component.onDecrementAmount();
+
+        expect(store.dispatch).toHaveBeenCalledWith(action);
+      });
+    });
+
+    describe('onRemoveIngredient', () => {
+      it('should dispatch a DELETE_ONE_FROM_SHOPPING store action', () => {
+        const action = new DeleteOneFromShopping(component.id);
+
+        component.onRemoveIngredient();
+
+        expect(store.dispatch).toHaveBeenCalledWith(action);
+      });
+    });
+  });
+
   describe('Template', () => {
-    it('should display the ingredient name', () => {
-      const result = isTextDisplayed(ingredient.name, 'span');
+    /**
+     * Tells whether a given text content is displayed in the template.
+     *
+     * @param textContent the text content
+     * @param selector the selector that includes the text content
+     * @return true if the text content is displayed in the template, false otherwise
+     */
+    function isTextDisplayed(textContent: any, selector: string): boolean {
+      let result = false;
 
-      expect(result).toBe(true);
+      for (const element of fixture.nativeElement.querySelectorAll(selector)) {
+        result = result || element.textContent.includes(textContent);
+      }
+
+      return result;
+    }
+
+    describe('Information', () => {
+      it('should display the ingredient name', () => {
+        const result = isTextDisplayed(component.ingredient.name, 'span');
+
+        expect(result).toBe(true);
+      });
+
+      it('should display the ingredient amount', () => {
+        const result = isTextDisplayed(component.ingredient.amount, 'span');
+
+        expect(result).toBe(true);
+      });
     });
 
-    it('should display the ingredient amount', () => {
-      const result = isTextDisplayed(ingredient.amount, 'span');
+    describe('Actions', () => {
+      /**
+       * Gets the button associated with a given inner HTML.
+       *
+       * @param innerHTML the inner HTML
+       * @return the button, or null if there is no button matching the inner HTML
+       */
+      function getButton(innerHTML: any): HTMLButtonElement {
+        let result = null;
 
-      expect(result).toBe(true);
-    });
+        for (const button of fixture.nativeElement.querySelectorAll('button')) {
+          if (button.innerHTML.includes(innerHTML)) {
+            result = button;
+          }
+        }
 
-    it('should make the delete button available', () => {
-      const action = new DeleteOneFromShopping(id);
-      const button = getButton('times');
+        return result;
+      }
 
-      button.click();
+      describe('Ingredient Deletion', () => {
+        it('should be available', () => {
+          const button = getButton('times');
 
-      expect(store.dispatch).toHaveBeenCalledWith(action);
-    });
+          expect(button).toBeTruthy();
 
-    it('should make the increment button available', () => {
-      const action = new UpdateOneFromShopping(id, {amount: ingredient.amount + 1});
-      const button = getButton('plus');
+          spyOn(component, 'onRemoveIngredient').and.callThrough();
+          button.click();
 
-      button.click();
+          expect(component.onRemoveIngredient).toHaveBeenCalled();
+        });
+      });
 
-      expect(store.dispatch).toHaveBeenCalledWith(action);
-    });
+      describe('Ingredient Amount Increment', () => {
+        it('should be available', () => {
+          const button = getButton('plus');
 
-    it('should make the decrement button available if the ingredient amount is greater than one', () => {
-      const action = new UpdateOneFromShopping(id, {amount: ingredient.amount - 1});
-      const button = getButton('minus');
+          expect(button).toBeTruthy();
 
-      button.click();
+          spyOn(component, 'onIncrementAmount').and.callThrough();
+          button.click();
 
-      expect(store.dispatch).toHaveBeenCalledWith(action);
-    });
+          expect(component.onIncrementAmount).toHaveBeenCalled();
+        });
+      });
 
-    it('should make the decrement button unavailable if the ingredient amount is less or equal to one', () => {
-      ingredient = {...ingredient, amount: 1};
-      component.ingredient = ingredient;
-      fixture.detectChanges();
+      describe('Ingredient Amount Decrement', () => {
+        it('should be available if the ingredient amount is greater than one', () => {
+          const button = getButton('minus');
 
-      const action = new UpdateOneFromShopping(id, {amount: ingredient.amount - 1});
-      const button = getButton('minus');
+          expect(button).toBeTruthy();
 
-      button.click();
+          spyOn(component, 'onDecrementAmount').and.callThrough();
+          component.ingredient = {...component.ingredient, amount: 2};
+          fixture.detectChanges();
+          button.click();
 
-      expect(store.dispatch).not.toHaveBeenCalledWith(action);
+          expect(component.onDecrementAmount).toHaveBeenCalled();
+        });
+
+        it('should be unavailable if the ingredient amount is less or equal to one', () => {
+          const button = getButton('minus');
+
+          expect(button).toBeTruthy();
+
+          spyOn(component, 'onDecrementAmount').and.callThrough();
+          component.ingredient = {...component.ingredient, amount: 1};
+          fixture.detectChanges();
+          button.click();
+
+          expect(component.onDecrementAmount).not.toHaveBeenCalled();
+        });
+      });
     });
   });
 });
