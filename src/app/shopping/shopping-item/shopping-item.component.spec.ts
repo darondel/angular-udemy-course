@@ -6,6 +6,7 @@ import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { ShoppingItemComponent } from './shopping-item.component';
 import { ShoppingFeatureState, shoppingReducers } from '../store/reducers/shopping.reducer';
 import { DeleteOneFromShopping, UpdateOneFromShopping } from '../store/actions/ingredient.actions';
+import { By } from '@angular/platform-browser';
 
 describe('ShoppingItemComponent', () => {
   let fixture: ComponentFixture<ShoppingItemComponent>;
@@ -135,31 +136,16 @@ describe('ShoppingItemComponent', () => {
     });
 
     describe('Actions', () => {
-      /**
-       * Gets the button associated with a given inner HTML.
-       *
-       * @param innerHTML the inner HTML
-       * @return the button, or null if there is no button matching the inner HTML
-       */
-      function getButton(innerHTML: any): HTMLButtonElement {
-        let result = null;
-
-        for (const button of fixture.nativeElement.querySelectorAll('button')) {
-          if (button.innerHTML.includes(innerHTML)) {
-            result = button;
-          }
-        }
-
-        return result;
-      }
-
       describe('Ingredient Deletion', () => {
-        it('should be available', () => {
-          const button = getButton('times');
+        let button: HTMLButtonElement;
 
-          expect(button).toBeTruthy();
+        beforeEach(() => {
+          button = fixture.debugElement.query(By.css('button[id=removeButton]')).nativeElement;
 
           spyOn(component, 'onRemoveIngredient').and.callThrough();
+        });
+
+        it('should call onRemoveIngredient operation', () => {
           button.click();
 
           expect(component.onRemoveIngredient).toHaveBeenCalled();
@@ -167,12 +153,15 @@ describe('ShoppingItemComponent', () => {
       });
 
       describe('Ingredient Amount Increment', () => {
-        it('should be available', () => {
-          const button = getButton('plus');
+        let button: HTMLButtonElement;
 
-          expect(button).toBeTruthy();
+        beforeEach(() => {
+          button = fixture.debugElement.query(By.css('button[id=incrementButton]')).nativeElement;
 
           spyOn(component, 'onIncrementAmount').and.callThrough();
+        });
+
+        it('should call onIncrementAmount operation', () => {
           button.click();
 
           expect(component.onIncrementAmount).toHaveBeenCalled();
@@ -180,12 +169,15 @@ describe('ShoppingItemComponent', () => {
       });
 
       describe('Ingredient Amount Decrement', () => {
-        it('should be available if the ingredient amount is greater than one', () => {
-          const button = getButton('minus');
+        let button: HTMLButtonElement;
 
-          expect(button).toBeTruthy();
+        beforeEach(() => {
+          button = fixture.debugElement.query(By.css('button[id=decrementButton]')).nativeElement;
 
           spyOn(component, 'onDecrementAmount').and.callThrough();
+        });
+
+        it('should call onDecrementAmount operation if the ingredient amount is greater than one', () => {
           component.ingredient = {...component.ingredient, amount: 2};
           fixture.detectChanges();
           button.click();
@@ -193,12 +185,7 @@ describe('ShoppingItemComponent', () => {
           expect(component.onDecrementAmount).toHaveBeenCalled();
         });
 
-        it('should be unavailable if the ingredient amount is less or equal to one', () => {
-          const button = getButton('minus');
-
-          expect(button).toBeTruthy();
-
-          spyOn(component, 'onDecrementAmount').and.callThrough();
+        it('should not call onDecrementAmount operation if the ingredient amount is less or equal to one', () => {
           component.ingredient = {...component.ingredient, amount: 1};
           fixture.detectChanges();
           button.click();

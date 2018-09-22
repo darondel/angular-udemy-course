@@ -1,13 +1,13 @@
 <div class="d-flex align-items-center">
   <span class="mr-auto">{{ ingredient.name }}</span>
   <span class="badge badge-primary badge-pill mr-2" [@amountAnimation]="ingredient.amount">{{ ingredient.amount }}</span>
-  <button type="button" class="btn btn-sm btn-outline-success mr-2" (click)="onIncrementAmount()">
+  <button type="button" class="btn btn-sm btn-outline-success mr-2" id="incrementButton" (click)="onIncrementAmount()">
     <i class="fas fa-plus"></i>
   </button>
-  <button type="button" class="btn btn-sm btn-outline-warning mr-2" (click)="onDecrementAmount()" [disabled]="!isDecrementEnabled">
+  <button type="button" class="btn btn-sm btn-outline-warning mr-2" id="decrementButton" (click)="onDecrementAmount()" [disabled]="!isDecrementEnabled">
     <i class="fas fa-minus"></i>
   </button>
-  <button type="button" class="btn btn-sm btn-outline-danger" (click)="onRemoveIngredient()">
+  <button type="button" class="btn btn-sm btn-outline-danger" id="removeButton" (click)="onRemoveIngredient()">
     <i class="fas fa-times"></i>
   </button>
 </div>
