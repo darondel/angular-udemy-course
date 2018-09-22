@@ -104,34 +104,17 @@ describe('ShoppingItemComponent', () => {
   });
 
   describe('Template', () => {
-    /**
-     * Tells whether a given text content is displayed in the template.
-     *
-     * @param textContent the text content
-     * @param selector the selector that includes the text content
-     * @return true if the text content is displayed in the template, false otherwise
-     */
-    function isTextDisplayed(textContent: any, selector: string): boolean {
-      let result = false;
-
-      for (const element of fixture.nativeElement.querySelectorAll(selector)) {
-        result = result || element.textContent.includes(textContent);
-      }
-
-      return result;
-    }
-
     describe('Information', () => {
       it('should display the ingredient name', () => {
-        const result = isTextDisplayed(component.ingredient.name, 'span');
+        const ingredientName = fixture.debugElement.query(By.css('#ingredientName')).nativeElement;
 
-        expect(result).toBe(true);
+        expect(ingredientName.textContent).toContain(component.ingredient.name);
       });
 
       it('should display the ingredient amount', () => {
-        const result = isTextDisplayed(component.ingredient.amount, 'span');
+        const ingredientName = fixture.debugElement.query(By.css('#ingredientAmount')).nativeElement;
 
-        expect(result).toBe(true);
+        expect(ingredientName.textContent).toContain(component.ingredient.amount);
       });
     });
 
