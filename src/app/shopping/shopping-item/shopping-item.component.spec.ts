@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { combineReducers, Store, StoreModule } from '@ngrx/store';
@@ -6,7 +7,6 @@ import { combineReducers, Store, StoreModule } from '@ngrx/store';
 import { ShoppingItemComponent } from './shopping-item.component';
 import { ShoppingFeatureState, shoppingReducers } from '../store/reducers/shopping.reducer';
 import { DeleteOneFromShopping, UpdateOneFromShopping } from '../store/actions/ingredient.actions';
-import { By } from '@angular/platform-browser';
 
 describe('ShoppingItemComponent', () => {
   let fixture: ComponentFixture<ShoppingItemComponent>;
@@ -52,9 +52,6 @@ describe('ShoppingItemComponent', () => {
   describe('Properties', () => {
     describe('isDecrementEnabled', () => {
       it('should be true if the ingredient amount is greater than one', () => {
-        component.ingredient = {...component.ingredient, amount: 2};
-        fixture.detectChanges();
-
         expect(component.isDecrementEnabled).toBe(true);
       });
 
@@ -123,7 +120,7 @@ describe('ShoppingItemComponent', () => {
         let button: HTMLButtonElement;
 
         beforeEach(() => {
-          button = fixture.debugElement.query(By.css('button[id=removeButton]')).nativeElement;
+          button = fixture.debugElement.query(By.css('#removeButton')).nativeElement;
 
           spyOn(component, 'onRemoveIngredient').and.callThrough();
         });
@@ -139,7 +136,7 @@ describe('ShoppingItemComponent', () => {
         let button: HTMLButtonElement;
 
         beforeEach(() => {
-          button = fixture.debugElement.query(By.css('button[id=incrementButton]')).nativeElement;
+          button = fixture.debugElement.query(By.css('#incrementButton')).nativeElement;
 
           spyOn(component, 'onIncrementAmount').and.callThrough();
         });
@@ -155,14 +152,12 @@ describe('ShoppingItemComponent', () => {
         let button: HTMLButtonElement;
 
         beforeEach(() => {
-          button = fixture.debugElement.query(By.css('button[id=decrementButton]')).nativeElement;
+          button = fixture.debugElement.query(By.css('#decrementButton')).nativeElement;
 
           spyOn(component, 'onDecrementAmount').and.callThrough();
         });
 
         it('should call onDecrementAmount operation if the ingredient amount is greater than one', () => {
-          component.ingredient = {...component.ingredient, amount: 2};
-          fixture.detectChanges();
           button.click();
 
           expect(component.onDecrementAmount).toHaveBeenCalled();
